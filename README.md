@@ -1,2 +1,2 @@
 # HTML-Map-Element
-Proposed spec for dynamic slippy maps in HTML
+Proposed [spec](http://maps4html.github.io/HTML-Map-Element/spec/) for dynamic slippy maps in HTML
