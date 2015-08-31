@@ -1,0 +1,374 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head>
+      <meta content="text/html; charset=UTF-8" http-equiv="content-type"></meta>
+
+
+  
+      <title>&lt;map&gt; Element Proposal</title>
+  
+  <link class="required" rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/w3c-unofficial.css" type="text/css"/>
+  <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/w3c-tr.css" />
+  <style>
+        h5 { position: relative; z-index: 3; }
+        h5 + .element { margin-top: -3.5em; padding-top: 2em; z-index: 2 }
+       .element {
+         background: #F4F4FA;
+         color: black;
+         margin: 0 0 1em 0.15em;
+         padding: 0 1em 0.25em 0.75em;
+         border-left: solid #9999FF 0.25em;
+         position: relative;
+         z-index: 1;
+       }
+       .element:before {
+         position: absolute;
+         z-index: 2;
+         top: 0;
+         left: -1.15em;
+         height: 2em;
+         width: 0.9em;
+         background: #F4F4FA;
+         content: ' ';
+         border-style: none none solid solid;
+         border-color: #9999FF;
+         border-width: 0.25em;
+       }
+    pre.idl { border: solid thin #d3d3d3; background: #FCFCFC; color: black; padding: 0.5em 1em; position: relative; }
+       pre.idl :link, pre.idl :visited { color: inherit; background: transparent; }
+       pre.idl::before { content: "IDL"; font: bold small sans-serif; padding: 0.5em; background: white; position: absolute; top: 0; margin: -1px 0 0 -4em; width: 1.5em; border: thin solid; border-radius: 0 0 0 0.5em }
+   table { border-collapse: collapse; border-style: hidden hidden none hidden; }
+   table thead, table tbody { border-bottom: solid; }
+   table tbody th:first-child { border-left: solid; }
+   table tbody th { text-align: left; }
+   table td, table th { border-left: solid; border-right: solid; border-bottom: solid thin; vertical-align: top; padding: 0.2em; }
+dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px solid lightgray; }
+       hr + dl.domintro, div.impl + dl.domintro { margin-top: 2.5em; margin-bottom: 1.5em; }
+       dl.domintro dt, dl.domintro dt * { color: black; text-decoration: none; }
+       dl.domintro dd { margin: 0.5em 0 1em 2em; padding: 0; }
+       dl.domintro dd p { margin: 0.5em 0; }
+       /*dl.domintro:before { display: table; margin: -1em -0.5em -0.5em auto; width: auto; content: 'This definition is non-normative. Implementation requirements are given below this definition.'; color: #606060; border:1px solid lightgray; background: white; padding: 0 0.25em;font-size:.9em;}*/
+      @media screen { code { color: #D93B00; } code :link, code :visited { color: inherit; } }
+  </style>
+
+</head>
+<body>
+<div class="content">
+
+<div class="head">
+
+<!-- <p id="logo"></p> -->
+
+<h1>The &lt;map&gt; HTML type extension custom element</h1>
+
+<h2 id="pagesubtitle"><time datetime="2015-08-31">August 31st, 2015</time></h2>
+
+<dl>
+  <dt>This version:</dt>
+  <dd><em>http://maps4html.github.io/map-element/spec/</em></dd>
+  
+  <dt>Latest version:</dt>
+  <dd><em>https://github.com/Maps4HTML/HTML-Map-Element</em></dd>
+  
+  <dt>Previous version:</dt>
+  <dd><em>n/a</em></dd>
+  
+  <dt>Editors:</dt>
+	<dd><em>Peter Rushforth</em>, Natural Resources Canada</dd>
+  <dt>Authors:</dt>
+	<dd><em>Maps for HTML Community Group</em>.</dd>
+</dl>
+
+
+<p class="copyright required">This document is licensed under a <a class="subfoot" href="http://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">W3C Software and Document License.</a>. </p>
+
+</div>
+
+<hr title="Separator from Header">
+
+<h2 id="abstract">Abstract</h2>
+
+  <p>The standard HTML &lt;map&gt; element allows the HTML author to designate sub-areas of an image to be used as hyperlinks, creating an "image map".  This functionality,
+    while useful, is limited to the simplest of mapping applications.  A more generally useful &lt;map&gt; element would enable (functions like) zooming and panning of the map 
+    in a traditional Web mapping way.  This specification describes the syntax and semantics of such an element.</p>
+<p>The use cases for maps on the Web are manifold.  They include:
+  <ul>
+    <li>Multiple, user-controllable map layers</li>
+    <li>Selection / identification / description of map features</li>
+    <li>Rescaling to expose greater detail (zooming)</li>
+    <li>Repositioning to examine relationships between places (panning)</li>
+    <li>Using Cascading Style Sheets to give power to HTML authors to control map styles</li>
+    <li>Links within and between services to enable a "Web of maps"</li>
+    <li>JavaScript API-level access to the map, its layers and features</li>
+    <li>Crawler-generated location-enabled, searchable indexes of Web content</li>
+  </ul>
+  </p>
+<div id="sotd">
+  <h2 id="status">Status of This Document</h2>
+
+  <p class="required"><em>This section describes the status of this document at the time of its publication. Other documents may supersede this document.</em></p>
+
+  <p class="disclaimer required"><strong>Although W3C has provided the template for this document for community use, the document is not affiliated with W3C in any way, and is not endorsed or approved by W3C.</strong></p>
+
+  <p class="required">This document is a draft of this specification, produced by an independent party.  It is inappropriate to cite this specification as as a publication of the World Wide Web Consortium (W3C), or anything other than a <em>work in progress</em> by an independent entity.</p>
+
+
+  <h3>Intent of this Specification</h3>
+  
+  <p>This specification is intended as a proposal to the HTML Working Group to extend the semantics of the &lt;map&gt; element.</p>
+	
+
+  <h3>Implementation Experience</h3>
+  
+  <p>A <a href="https://github.com/Maps4HTML/MapML-Map-Custom-Element">Custom Type Extension Element</a> has been developed which implements this specification using the <a href="https://github.com/Maps4HTML/MapML-Leaflet-Client">MapML-Leaflet-Client</a>, <a href="https://github.com/Leaflet/Leaflet">Leaflet</a> and <a href="https://github.com/Polymer/polymer">Polymer</a> JavaScript libraries.</p>
+
+  
+  <h3>Changes Since the Previous Draft</h3>
+  
+  <p>n/a</p>
+
+  
+  <h3>Level of Endorsement by the Community</h3>
+  
+  <p>Please join the W3C Maps for HTML Community Group if you would like to participate in the development and implementation of this specification.</p>
+
+  
+  <h3>Patent Information</h3>
+  
+  <p>Development of this specification together with implementations is done under the terms of the <a href="http://www.w3.org/Consortium/Legal/2015/copyright-software-and-document">W3C Software Notice and License</a>, in accordance with the rules of the W3C Community Groups program</p>
+
+  
+  <h3>How to provide feedback</h3>
+
+  <p>Please send comments on this specification to public-maps4html@w3.org. Even better: join the group and submit a pull request or open an issue.</p>
+  
+</div>
+
+<hr>
+
+
+<div id="toc">
+	<h2>Contents</h2>
+	<ol class="toc">
+		<li>1. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#sec-intro">Introduction</a></li>
+		<li>2. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#conformance">Conformance</a></li>
+		<li>3. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#ucr">Use Cases and Requirements</a>
+			<ul class="toc">
+				<li>3.1. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#use-cases">Use Cases</a></li>
+				<li>3.2. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#requirements">Requirements</a></li>
+			</ul>
+		</li>
+		<li>4. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#features">Features</a></li>
+		<li>5. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#examples">Examples</a></li>
+		<li>6. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#security">Security Considerations</a></li>
+		<li>7. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#glossary">Glossary of Terms and Datatypes</a></li>
+		<li>8. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#schema">Schema</a>
+			<ul class="toc">
+				<li>8.1. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#rng">RelaxNG Schema</a></li>
+				<li>8.2. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#xmlschema">XML Schema</a></li>
+			</ul>
+		</li>
+		<li>9. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#sec-refs">References</a>
+			<ul class="toc">
+				<li>9.1. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#normrefs">Normative References</a></li>
+				<li>9.2. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#informrefs">Informative References</a></li>
+			</ul>
+		</li>
+		<li>10. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#Acknowledgments">Acknowledgments</a></li>
+	</ol>
+</div>
+
+
+<div id="sec-intro">
+	<h2 id="intro">1. Introduction</h2>
+	<p>This section is informative.</p>
+	
+	<p><em>Describe the technology and specification here.</em></p>
+	
+</div>
+
+
+
+<div id="sec-conformance">  
+	<h2 id="conformance">2. Conformance</h2>
+	<p>This section is normative.</p>
+	
+	<p><em>Describe different conformance classes here.</em></p>
+
+	<p>This document contains explicit conformance criteria that overlap with some RNG definitions in requirements. If there is any conflict between the two, the explicit conformance criteria are the definitive reference. </p>
+	
+	<p>Within this specification, the key words "MUST, "MUST NOT", "REQUIRED, "SHALL, "SHALL NOT, "SHOULD, "SHOULD NOT", "RECOMMENDED, "MAY", and "OPTIONAL" are to be interpreted as described in <a href="http://www.ietf.org/rfc/rfc2119.txt">RFC 2119</a> [<a href="http://www.w3.org/People/Schepers/ref-RFC2119">RFC2119</a>].  However, for readability, these words do not necessarily appear in uppercase in this specification.</p>
+
+</div>
+
+
+
+<div id="sec-ucr">
+	<h2 id="ucr">3. Use Cases and Requirements</h2>
+	<p>This section is informative.</p>
+	
+	<h3 id="use-cases">3.1. Use Cases</h3>
+  <p>The following usage scenarios illustrate some of the ways in which <em>Specification Template</em> might be used for various applications:</p>
+
+  <p><strong>Insert Use Case 1</strong>: Explain use case 1. </p>
+  <p><strong>Insert Use Case 2</strong>: Explain use case 2. </p>
+
+
+  <h3 id="requirements">3.2. Requirements</h3>
+
+  <p><strong>Memory and processor requirements</strong>:  What are the requirements on memory or processing resources?</p>
+  <p><strong>Implementation commitments</strong>:  How difficult, or what details are needed, for implementation?</p>
+  <p><strong>Ease of authoring</strong>:  What considerations need to be borne in mind for authors?</p>
+
+</div>
+
+
+
+<div id="sec-features">
+	<h2 id="features">4. Features</h2>
+	<p>This section is normative.</p>
+	
+	<p><em>Please define the features of the specification here, including the necessary elements, attributes, attribute values, interfaces, methods, and other features.</em></p>
+	
+	<p><em>Authors are encouraged to also describe features in terms of the IDL using Web IDL [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-WebIDL">WebIDL</a>] blocks inline.</em></p>
+	
+	<p class="note"><strong>Note:</strong> Specification authors are encouraged to use the <a href="http://www.w3.org/People/Schepers/spec-conventions.html">W3C Typographic Conventions</a> for marking up and styling their documents.</p>
+	
+</div>
+
+
+
+<div id="sec-examples">
+	<h2 id="examples">5. Examples</h2>
+	<p>This section is informative.</p>
+	
+	<p><em>Provide examples of the usage of the technology here.  Alternately, examples may be provided inline in the section on features, in which case, this section should be removed.</em></p>
+	
+</div>
+
+
+
+<div id="sec-security">
+	<h2 id="security">6. Security Considerations</h2>
+	<p>This section is informative.</p>
+
+	<p><em>Provide security considerations for the implementation and authoring of this technology here.</em></p>
+	
+</div>
+
+
+
+<div id="sec-glossary">
+	<h2 id="glossary">7. Glossary of Terms and Datatypes</h2>
+	<p>This section is normative.</p>
+
+	<p><em>Provide a glossary of terms and datatypes used in this specification.</em></p>
+	
+</div>
+
+
+
+<div id="sec-schema">
+	<h2 id="schema">8. Schema</h2>
+	
+	<p>Providing a schema is useful for machine processing of documents, be it document creation, transformation, or validation.  Specification authors are encouraged to provide either or both of a RelaxNG or XML Schema, as appropriate.  These schemas typically allow an author to more easily create a more expressive definition than with DTD (Document Type Definition).</p>
+
+	<h2 id="rng">8.1. RelaxNG Schema</h2>
+
+	<p>Specification Template 1.0 provides a schema written in <a href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">RelaxNG</a> [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-RNG">RelaxNG</a>], a namespace-aware schema language that uses the datatypes from <a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/">XML Schema Part 2</a> [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-Schema2">Schema2</a>]. This allows namespaces and modularity to be much more naturally expressed than using DTD syntax. The RelaxNG schema for Specification Template 1.0 may be imported by other RelaxNG schemas, or combined with other schemas in other languages into a multi-namespace, multi-grammar schema using <a href="http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/">Namespace-based Validation Dispatching Language</a> [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-NVDL">NVDL</a>].</p>
+
+	<p>Unlike a DTD, the schema used for validation is not hardcoded into the document instance. There is no equivalent to the DOCTYPE declaration. Simply point your editor or other validation tool to the IRI of the schema (or your local cached copy, as you prefer).</p>
+
+	<p>
+	 <em>Please add a RelaxNG schema here, and link to external schema files, if made available.</em>
+	</p>
+	
+
+	<h2 id="xmlschema">8.2. XML Schema</h2>
+
+	<p>Specification Template 1.0 provides a schema written in XML Schema [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-XMLSCHEMA">XMLSCHEMA</a>], an XML schema language that uses the datatypes from <a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/">XML Schema Part 2</a> [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-Schema2">Schema2</a>].</p>
+
+	<p>
+	 <em>Please add an XML schema here, and link to external schema files, if made available.</em>
+	</p>
+	
+</div>
+
+
+<div id="sec-refs">
+	<h2 id="refs">9. References</h2>
+
+	<h3 id="normrefs">9.1. Normative References</h3>
+	<dl>
+
+    <dt id="ref-RFC2119"><strong class="normref">[RFC2119]</strong></dt>
+    <dd>
+      <cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>,
+      S. Bradner, March 1997.
+      <br>Available at http://tools.ietf.org/html/rfc2119.
+    </dd>
+
+    <dt id="ref-RNG"><strong class="normref">[RELAXNG]</strong></dt>
+    <dd>
+      <cite><a href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">Document Schema Definition Languages (DSDL) Ã¢â‚¬â€� Part 2: Regular grammar-based validation Ã¢â‚¬â€� RELAX NG, ISO/IEC FDIS 19757-2:2002(E)</a></cite>,
+      J. Clark, <ruby><rb xml:lang="ja">Ã¦ï¿½â€˜Ã§â€�Â° Ã§Å“Å¸</rb> <rp>(</rp><rt><span class="familyname">Murata</span> M.</rt><rp>)</rp></ruby>, eds.
+      International Organization for Standardization, 12 December 2002.
+      <br>Available at http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf.
+    </dd>
+
+    <dt><a id="ref-XMLSCHEMA" class="normref">[XMLSCHEMA]</a></dt>
+    <dd>
+      <cite><a href="http://www.w3.org/TR/2004/REC-xmlschema-1-20041028/">XML Schema Part 1: Structures Second Edition</a></cite>, 
+      H. S. Thompson <em xml:lang="la" lang="la">et al.</em>, <abbr title="editors">eds.</abbr>, 
+      W3C Recommendation, 28 October 2004.<br>
+      Available at: http://www.w3.org/TR/2004/REC-xmlschema-1-20041028/<br>
+    
+      <cite><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/">XML Schema Part 2: Datatypes Second Edition</a></cite>, 
+      P. V. Biron, A. Malhotra, <abbr title="editors">eds.</abbr>, 
+      W3C Recommendation, 28 October 2004.<br>
+      Available at: http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/
+    </dd>
+
+	</dl>
+
+	<h3 id="informrefs">9.2. Informative References</h3>
+	<dl>
+
+    <dt id="ref-SCHEMA2"><strong class="informref">[SCHEMA2]</strong></dt>
+    <dd>
+      <cite class="w3crec"><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/">XML Schema Part 2: Datatypes Second Edition</a></cite>.
+      P. Biron, A. Malhotra, eds.
+      World Wide Web Consortium, 28 October 2004.
+      (See also <a href="http://www.w3.org/TR/2005/NOTE-xml11schema10-20050511/"><cite>Processing XML 1.1 documents with XML Schema 1.0 processors</cite></a>
+      [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-XML11-SCHEMA">XML11-SCHEMA</a>].)
+      <br>This edition of XML Schema Part 2 is http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/.
+      <br>The <a href="http://www.w3.org/TR/xmlschema-2/">latest edition of XML Schema Part 2</a> is available at
+      http://www.w3.org/TR/xmlschema-2/.
+    </dd>
+  
+    <dt id="ref-WebIDL"><strong class="informref">[WebIDL]</strong></dt>
+    <dd>
+      <cite class="w3cwd"><a href="http://www.w3.org/TR/2008/WD-WebIDL-20081219/">WebIDL</a></cite>,
+      C. McCormack, ed.
+      World Wide Web Consortium, <span class="wip">work in progress</span>, 19 December 2008.
+      <br>This edition of WebIDL is http://www.w3.org/TR/2008/WD-WebIDL-20081219/.
+      <br>The <a href="http://dev.w3.org/2006/webapi/WebIDL/">latest edition of WebIDL</a> is available at
+      http://dev.w3.org/2006/webapi/WebIDL/.
+    </dd>
+
+	</dl>
+	
+</div>
+
+
+<div>
+  <h3 id="Acknowledgments">10. Acknowledgments</h3>
+
+  <p>
+    The editors would like to acknowledge and thank the following people for substantive aid with this specification: 
+    <em>list of names</em>.
+  </p>
+</div>
+
+</div>
+
+</body></html>
