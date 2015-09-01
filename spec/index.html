@@ -58,16 +58,16 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 
 <!-- <p id="logo"></p> -->
 
-<h1>The &lt;map&gt; HTML Type Extension Custom Element</h1>
+<h1>The &lt;map&gt; HTML Element proposal</h1>
 
 <h2 id="pagesubtitle"><time datetime="2015-08-31">August 31st, 2015</time></h2>
 
 <dl>
   <dt>This version:</dt>
-  <dd>http://maps4html.github.io/HTML-Map-Element/spec/</dd>
+  <dd><a href="http://maps4html.github.io/HTML-Map-Element/spec/">http://maps4html.github.io/HTML-Map-Element/spec/</a></dd>
   
   <dt>Latest version:</dt>
-  <dd>https://github.com/Maps4HTML/HTML-Map-Element</dd>
+  <dd><a href="https://github.com/Maps4HTML/HTML-Map-Element">https://github.com/Maps4HTML/HTML-Map-Element</a></dd>
   
   <dt>Previous version:</dt>
   <dd><em>n/a</em></dd>
@@ -75,7 +75,7 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
   <dt>Editors:</dt>
 	<dd><em>Peter Rushforth</em>, Natural Resources Canada</dd>
   <dt>Authors:</dt>
-	<dd><em>Maps for HTML Community Group</em>.</dd>
+  <dd><em><a href="http://www.w3.org/community/maps4html/">Maps for HTML Community Group</a></em>.</dd>
 </dl>
 
 
@@ -87,21 +87,13 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 
 <h2 id="abstract">Abstract</h2>
 
-  <p>The standard HTML &lt;map&gt; element allows the HTML author to designate sub-areas of an image to be used as hyperlinks, creating an "image map".  This functionality,
+  <p>The standard HTML &lt;map&gt; element allows the HTML author to designate sub-areas of an image to be used as hyperlinks, creating an "image map".  This functionality
     while useful, is limited to the simplest of mapping applications.  A more generally useful &lt;map&gt; element would enable (functions like) zooming and panning of the map 
-    in a traditional Web mapping way.  This specification describes the syntax and semantics of such an element.</p>
-<p>The use cases for maps on the Web are manifold.  They include:
-  <ul>
-    <li>Multiple, user-controllable map layers</li>
-    <li>Selection / identification / description of map features</li>
-    <li>Rescaling to expose greater detail (zooming)</li>
-    <li>Repositioning to examine relationships between places (panning)</li>
-    <li>Using Cascading Style Sheets to give power to HTML authors to control map styles</li>
-    <li>Links within and between services to enable a "Web of maps"</li>
-    <li>JavaScript API-level access to the map, its layers and features</li>
-    <li>Crawler-generated location-enabled, searchable indexes of Web content</li>
-  </ul>
-  </p>
+    in a traditional Web mapping way, while simultaneously being equally simple and declarative for an HTML author to include on their Web page.  This specification proposes the syntax and semantics of such an element.</p>
+<p>The applications of Web maps are diverse.  The wide scope of use of Web maps appears similarly broad to that of other Web media types, such as video or audio.  In other words, there are a multitude of reasons for wanting to include
+a map on your Web page.  While not wishing to exclude the excellent large Web map providers, but equally not wishing to exclude other provider options, the HTML &lt;map&gt; element proposed by this document should be provider-agnostic, 
+and should only depend on Web standards, including Uniform Resource Identifiers, Document Object Model, Cascading Style Sheets and media types.  To that end, the present specification is a sibling to another related specification 
+proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 <div id="sotd">
   <h2 id="status">Status of This Document</h2>
 
@@ -119,7 +111,7 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 
   <h3>Implementation Experience</h3>
   
-  <p>A <a href="https://github.com/Maps4HTML/MapML-Map-Custom-Element">Custom Type Extension Element</a> has been developed which implements this specification using the <a href="https://github.com/Maps4HTML/MapML-Leaflet-Client">MapML-Leaflet-Client</a>, <a href="https://github.com/Leaflet/Leaflet">Leaflet</a> and <a href="https://github.com/Polymer/polymer">Polymer</a> JavaScript libraries.</p>
+  <p>A <a href="https://github.com/Maps4HTML/Map-Custom-Element">Custom Type Extension Element</a> has been developed which implements this specification using the <a href="https://github.com/Maps4HTML/MapML-Leaflet-Client">MapML-Leaflet-Client</a>, <a href="https://github.com/Leaflet/Leaflet">Leaflet</a> and <a href="https://github.com/Polymer/polymer">Polymer</a> JavaScript libraries.</p>
 
   
   <h3>Changes Since the Previous Draft</h3>
@@ -149,31 +141,30 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 <div id="toc">
 	<h2>Contents</h2>
 	<ol class="toc">
-		<li>1. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#sec-intro">Introduction</a></li>
-		<li>2. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#conformance">Conformance</a></li>
-		<li>3. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#ucr">Use Cases and Requirements</a>
+		<li>1. <a href="#sec-intro">Introduction</a></li>
+		<li>2. <a href="#conformance">Conformance</a></li>
+		<li>3. <a href="#ucr">Use Cases and Requirements</a>
 			<ul class="toc">
-				<li>3.1. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#use-cases">Use Cases</a></li>
-				<li>3.2. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#requirements">Requirements</a></li>
+				<li>3.1. <a href="#use-cases">Use Cases</a></li>
+				<li>3.2. <a href="#requirements">Requirements</a></li>
 			</ul>
 		</li>
-		<li>4. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#features">Features</a></li>
-		<li>5. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#examples">Examples</a></li>
-		<li>6. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#security">Security Considerations</a></li>
-		<li>7. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#glossary">Glossary of Terms and Datatypes</a></li>
-		<li>8. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#schema">Schema</a>
+		<li>4. <a href="#features">Features</a></li>
+		<li>5. <a href="#examples">Examples</a></li>
+		<li>6. <a href="#security">Security Considerations</a></li>
+		<li>7. <a href="#glossary">Glossary of Terms and Datatypes</a></li>
+		<li>8. <a href="#schema">Schema</a>
 			<ul class="toc">
-				<li>8.1. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#rng">RelaxNG Schema</a></li>
-				<li>8.2. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#xmlschema">XML Schema</a></li>
+				<li>8.1. <a href="#rng">RelaxNG Schema</a></li>
 			</ul>
 		</li>
-		<li>9. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#sec-refs">References</a>
+		<li>9. <a href="#sec-refs">References</a>
 			<ul class="toc">
-				<li>9.1. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#normrefs">Normative References</a></li>
-				<li>9.2. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#informrefs">Informative References</a></li>
+				<li>9.1. <a href="#normrefs">Normative References</a></li>
+				<li>9.2. <a href="#informrefs">Informative References</a></li>
 			</ul>
 		</li>
-		<li>10. <a href="http://www.w3.org/People/Schepers/unoffical_template.html#Acknowledgments">Acknowledgments</a></li>
+		<li>10. <a href="#Acknowledgments">Acknowledgments</a></li>
 	</ol>
 </div>
 
@@ -182,7 +173,13 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 	<h2 id="intro">1. Introduction</h2>
 	<p>This section is informative.</p>
 	
-	<p><em>Describe the technology and specification here.</em></p>
+        <p>This specification extends the role of the <code>&lt;map&gt;</code> element in HTML.  The semantics of the standard <code>&lt;map&gt;</code> element allow the HTML author to 
+            create areas over a static HTML which act as hyperlinks.  This specification adds syntax and semantics to the <code>&lt;map&gt;</code> element, allowing it to be used in 
+           cartographic Web applications as an actual Web map.  The intention of this specification is to describe the extended syntax and semantics of the new mode for the 
+           <code>&lt;map&gt;</code> element, independent of underlying technology - whether that be native browser or Web Components.   However, it is noted here that in order
+           to access the extended semantics described in this specification when using the Polymer-based Custom Type Extension Element implementation only, the main syntactic 
+           requirement (not elsewhere described in this specification) is to add the &lt; map is="mapml-map"&gt; attribute.  Details specific to how to author a Web page using the 
+           Polymer Custom Type Extension Element implementation can be found in the <a href="#ref-Map-Custom-Element">HTML Map Custom Type Extension Element project</a></p>
 	
 </div>
 
@@ -192,11 +189,9 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 	<h2 id="conformance">2. Conformance</h2>
 	<p>This section is normative.</p>
 	
-	<p><em>Describe different conformance classes here.</em></p>
-
 	<p>This document contains explicit conformance criteria that overlap with some RNG definitions in requirements. If there is any conflict between the two, the explicit conformance criteria are the definitive reference. </p>
 	
-	<p>Within this specification, the key words "MUST, "MUST NOT", "REQUIRED, "SHALL, "SHALL NOT, "SHOULD, "SHOULD NOT", "RECOMMENDED, "MAY", and "OPTIONAL" are to be interpreted as described in <a href="http://www.ietf.org/rfc/rfc2119.txt">RFC 2119</a> [<a href="http://www.w3.org/People/Schepers/ref-RFC2119">RFC2119</a>].  However, for readability, these words do not necessarily appear in uppercase in this specification.</p>
+	<p>Within this specification, the key words "MUST, "MUST NOT", "REQUIRED, "SHALL, "SHALL NOT, "SHOULD, "SHOULD NOT", "RECOMMENDED, "MAY", and "OPTIONAL" are to be interpreted as described in <a href="http://www.ietf.org/rfc/rfc2119.txt">RFC 2119</a> [<a href="#ref-RFC2119">RFC2119</a>].  However, for readability, these words do not necessarily appear in uppercase in this specification.</p>
 
 </div>
 
@@ -207,17 +202,30 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 	<p>This section is informative.</p>
 	
 	<h3 id="use-cases">3.1. Use Cases</h3>
-  <p>The following usage scenarios illustrate some of the ways in which <em>Specification Template</em> might be used for various applications:</p>
+  <p>The following usage scenarios illustrate some of the ways in which the <code>&lt;map&gt;</code> element might be used for various applications:</p>
 
-  <p><strong>Insert Use Case 1</strong>: Explain use case 1. </p>
-  <p><strong>Insert Use Case 2</strong>: Explain use case 2. </p>
+  <ul>
+    <li><strong>Multiple, user-controllable map layers</strong></li>
+    
+    <li><strong>Selection / identification / description of map features</strong></li>
+    <li><strong>Rescaling to expose greater detail (zooming)</strong></li>
+    <li><strong>Repositioning to examine relationships between places (panning)</strong></li>
+    <li><strong>Using Cascading Style Sheets to give power to HTML authors to control map styles</strong></li>
+    <li><strong>Links within and between services to enable a "Web of maps"</strong></li>
+    <li><strong>JavaScript API-level access to the map, its layers and features</strong></li>
+    <li><strong>Crawler-generated location-enabled, searchable indexes of Web content</strong></li>
+  </ul>
 
 
   <h3 id="requirements">3.2. Requirements</h3>
 
-  <p><strong>Memory and processor requirements</strong>:  What are the requirements on memory or processing resources?</p>
-  <p><strong>Implementation commitments</strong>:  How difficult, or what details are needed, for implementation?</p>
-  <p><strong>Ease of authoring</strong>:  What considerations need to be borne in mind for authors?</p>
+  <p><strong>Implementation commitments</strong>:  </p>
+  <p>The Custom Type Extension Element implementation has access to and uses the facilities (for example, SVG support) provided by browsers to simulate the behavior of a potential native implementation, 
+    and to the extent that those facilities work similarly / are standard across browser implementations, the Custom Type Extension Element is functional.  However, as the Custom Element implementation 
+    is intended to provide a proof of concept, efforts to polyfill browser provided facilities such as SVG support have not been made to date.  It is unclear whether such effort would be worthwhile.</p>
+  <p><strong>Ease of authoring</strong>: </p>
+  <p>The <code>&lt;map&gt;</code> element is primarily intended to simplify the authoring of Web maps, eliminating the hard requirement for script or allowing progressive enhancement the behavior of the element 
+    through script. Additionally, the use of declarative markup enables the use of CSS technology for cartographic and other user experience criteria.</p>
 
 </div>
 
@@ -229,7 +237,7 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 	
 	<p><em>Please define the features of the specification here, including the necessary elements, attributes, attribute values, interfaces, methods, and other features.</em></p>
 	
-	<p><em>Authors are encouraged to also describe features in terms of the IDL using Web IDL [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-WebIDL">WebIDL</a>] blocks inline.</em></p>
+	<p><em>Authors are encouraged to also describe features in terms of the IDL using Web IDL [<a href="#ref-WebIDL">WebIDL</a>] blocks inline.</em></p>
 	
 	<p class="note"><strong>Note:</strong> Specification authors are encouraged to use the <a href="http://www.w3.org/People/Schepers/spec-conventions.html">W3C Typographic Conventions</a> for marking up and styling their documents.</p>
 	
@@ -274,7 +282,7 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 
 	<h2 id="rng">8.1. RelaxNG Schema</h2>
 
-	<p>Specification Template 1.0 provides a schema written in <a href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">RelaxNG</a> [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-RNG">RelaxNG</a>], a namespace-aware schema language that uses the datatypes from <a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/">XML Schema Part 2</a> [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-Schema2">Schema2</a>]. This allows namespaces and modularity to be much more naturally expressed than using DTD syntax. The RelaxNG schema for Specification Template 1.0 may be imported by other RelaxNG schemas, or combined with other schemas in other languages into a multi-namespace, multi-grammar schema using <a href="http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/">Namespace-based Validation Dispatching Language</a> [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-NVDL">NVDL</a>].</p>
+	<p>Specification Template 1.0 provides a schema written in <a href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">RelaxNG</a> [<a href="#ref-RNG">RelaxNG</a>], a namespace-aware schema language that uses the datatypes from <a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/">XML Schema Part 2</a> [<a href="#ref-Schema2">Schema2</a>]. This allows namespaces and modularity to be much more naturally expressed than using DTD syntax. The RelaxNG schema for Specification Template 1.0 may be imported by other RelaxNG schemas, or combined with other schemas in other languages into a multi-namespace, multi-grammar schema using <a href="http://www.asahi-net.or.jp/~eb2m-mrt/dsdl/">Namespace-based Validation Dispatching Language</a> [<a href="#ref-NVDL">NVDL</a>].</p>
 
 	<p>Unlike a DTD, the schema used for validation is not hardcoded into the document instance. There is no equivalent to the DOCTYPE declaration. Simply point your editor or other validation tool to the IRI of the schema (or your local cached copy, as you prefer).</p>
 
@@ -283,14 +291,6 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 	</p>
 	
 
-	<h2 id="xmlschema">8.2. XML Schema</h2>
-
-	<p>Specification Template 1.0 provides a schema written in XML Schema [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-XMLSCHEMA">XMLSCHEMA</a>], an XML schema language that uses the datatypes from <a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/">XML Schema Part 2</a> [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-Schema2">Schema2</a>].</p>
-
-	<p>
-	 <em>Please add an XML schema here, and link to external schema files, if made available.</em>
-	</p>
-	
 </div>
 
 
@@ -307,44 +307,34 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
       <br>Available at http://tools.ietf.org/html/rfc2119.
     </dd>
 
-    <dt id="ref-RNG"><strong class="normref">[RELAXNG]</strong></dt>
+    <dt id="ref-Map-Custom-Element"><strong class="normref">[Map-Custom-Element]</strong></dt>
     <dd>
-      <cite><a href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">Document Schema Definition Languages (DSDL) Ã¢â‚¬â€� Part 2: Regular grammar-based validation Ã¢â‚¬â€� RELAX NG, ISO/IEC FDIS 19757-2:2002(E)</a></cite>,
-      J. Clark, <ruby><rb xml:lang="ja">Ã¦ï¿½â€˜Ã§â€�Â° Ã§Å“Å¸</rb> <rp>(</rp><rt><span class="familyname">Murata</span> M.</rt><rp>)</rp></ruby>, eds.
-      International Organization for Standardization, 12 December 2002.
-      <br>Available at http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf.
+      <cite><a href="https://github.com/Maps4HTML/Map-Custom-Element"><code>map</code> Custom Type Extension Element project</a></cite>,
+      Maps For HTML Community Group, August 2015.
+      <br>Available at https://github.com/Maps4HTML/Map-Custom-Element.
     </dd>
 
-    <dt><a id="ref-XMLSCHEMA" class="normref">[XMLSCHEMA]</a></dt>
+    <dt id="ref-MapML"><strong class="normref">[MapML]</strong></dt>
     <dd>
-      <cite><a href="http://www.w3.org/TR/2004/REC-xmlschema-1-20041028/">XML Schema Part 1: Structures Second Edition</a></cite>, 
-      H. S. Thompson <em xml:lang="la" lang="la">et al.</em>, <abbr title="editors">eds.</abbr>, 
-      W3C Recommendation, 28 October 2004.<br>
-      Available at: http://www.w3.org/TR/2004/REC-xmlschema-1-20041028/<br>
-    
-      <cite><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/">XML Schema Part 2: Datatypes Second Edition</a></cite>, 
-      P. V. Biron, A. Malhotra, <abbr title="editors">eds.</abbr>, 
-      W3C Recommendation, 28 October 2004.<br>
-      Available at: http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/
+      <cite><a href="http://maps4html.github.io/mapml/spec/">Map Markup Language</a></cite>,
+      Maps For HTML Community Group, July 14, 2015.
+      <br>Available at http://maps4html.github.io/mapml/spec/.
     </dd>
+
+    <dt id="ref-RNG"><strong class="normref">[RELAXNG]</strong></dt>
+	  <dd>
+	    <cite><a href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">Document Schema Definition Languages (DSDL) — Part 2: Regular grammar-based validation — RELAX NG, ISO/IEC FDIS 19757-2:2002(E)</a></cite>,
+	    J. Clark, <ruby><rb xml:lang="ja">村田 真</rb> <rp>(</rp><rt><span class="familyname">Murata</span> M.</rt><rp>)</rp></ruby>, eds.
+	    International Organization for Standardization, 12 December 2002.
+	    <br/>Available at http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf.
+	  </dd>
+	</dl>
 
 	</dl>
 
 	<h3 id="informrefs">9.2. Informative References</h3>
 	<dl>
 
-    <dt id="ref-SCHEMA2"><strong class="informref">[SCHEMA2]</strong></dt>
-    <dd>
-      <cite class="w3crec"><a href="http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/">XML Schema Part 2: Datatypes Second Edition</a></cite>.
-      P. Biron, A. Malhotra, eds.
-      World Wide Web Consortium, 28 October 2004.
-      (See also <a href="http://www.w3.org/TR/2005/NOTE-xml11schema10-20050511/"><cite>Processing XML 1.1 documents with XML Schema 1.0 processors</cite></a>
-      [<a href="http://www.w3.org/People/Schepers/unoffical_template.html#ref-XML11-SCHEMA">XML11-SCHEMA</a>].)
-      <br>This edition of XML Schema Part 2 is http://www.w3.org/TR/2004/REC-xmlschema-2-20041028/.
-      <br>The <a href="http://www.w3.org/TR/xmlschema-2/">latest edition of XML Schema Part 2</a> is available at
-      http://www.w3.org/TR/xmlschema-2/.
-    </dd>
-  
     <dt id="ref-WebIDL"><strong class="informref">[WebIDL]</strong></dt>
     <dd>
       <cite class="w3cwd"><a href="http://www.w3.org/TR/2008/WD-WebIDL-20081219/">WebIDL</a></cite>,
