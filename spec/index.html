@@ -202,15 +202,29 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 	<p>This section is informative.</p>
 	
 	<h3 id="use-cases">3.1. Use Cases</h3>
-  <p>The following usage scenarios illustrate some of the ways in which the <code>&lt;map&gt;</code> element might be used for various applications:</p>
+  <p>The following use cases illustrate some of the ways in which the <code>&lt;map&gt;</code> element might be used in Web mapping applications:</p>
 
   <ul>
-    <li><strong>Multiple, user-controllable map layers</strong></li>
+    <li><strong>Multiple, user-controllable map layers</strong>
+      <p>The <code>&lt;map&gt;</code> element allows HTML authors to add zero or more map layers to the map, with optional controls accessible declaratively.</p>
+    </li>
     
-    <li><strong>Selection / identification / description of map features</strong></li>
-    <li><strong>Rescaling to expose greater detail (zooming)</strong></li>
-    <li><strong>Repositioning to examine relationships between places (panning)</strong></li>
-    <li><strong>Using Cascading Style Sheets to give power to HTML authors to control map styles</strong></li>
+    <li><strong>Selection / identification / description of map features</strong>
+      <p>
+        The user should be able to interact with individual map features as though they are individual hyperlinks.
+      </p>
+    </li>
+    <li><strong>Rescaling to expose greater detail (zooming)</strong>
+      <p>The user should be able to zoom in or out on the map to expose more or less detail as desired / possible.</p>
+       
+    </li>
+    <li><strong>Repositioning to examine relationships between places (panning)</strong>
+      <p>The user should be able to pan the map so as to examine locations other than the default or initial location displayed, as desired / possible.</p>
+    </li>
+    <li><strong>Using Cascading Style Sheets to give power to HTML authors to control map styles</strong>
+      <p>The HTML author should be able to use Cascading Style Sheets on the <code>&lt;map&gt;</code> element and its children so as to create the user experience desired / possible.  The style of features presented by
+        map services should be under the control of the service provider, per [<a href="#ref-MapML">MapML</a>] requirements.</p>
+    </li>
     <li><strong>Links within and between services to enable a "Web of maps"</strong></li>
     <li><strong>JavaScript API-level access to the map, its layers and features</strong></li>
     <li><strong>Crawler-generated location-enabled, searchable indexes of Web content</strong></li>
@@ -323,8 +337,8 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 
     <dt id="ref-RNG"><strong class="normref">[RELAXNG]</strong></dt>
 	  <dd>
-	    <cite><a href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">Document Schema Definition Languages (DSDL) — Part 2: Regular grammar-based validation — RELAX NG, ISO/IEC FDIS 19757-2:2002(E)</a></cite>,
-	    J. Clark, <ruby><rb xml:lang="ja">村田 真</rb> <rp>(</rp><rt><span class="familyname">Murata</span> M.</rt><rp>)</rp></ruby>, eds.
+	    <cite><a href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">Document Schema Definition Languages (DSDL) â€” Part 2: Regular grammar-based validation â€” RELAX NG, ISO/IEC FDIS 19757-2:2002(E)</a></cite>,
+	    J. Clark, <ruby><rb xml:lang="ja">æ�‘ç”° çœŸ</rb> <rp>(</rp><rt><span class="familyname">Murata</span> M.</rt><rp>)</rp></ruby>, eds.
 	    International Organization for Standardization, 12 December 2002.
 	    <br/>Available at http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf.
 	  </dd>
