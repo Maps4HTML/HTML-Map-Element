@@ -238,8 +238,8 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
     and to the extent that those facilities work similarly / are standard across browser implementations, the Custom Type Extension Element is functional.  However, as the Custom Element implementation 
     is intended to provide a proof of concept, efforts to polyfill browser provided facilities such as SVG support have not been made to date.  It is unclear whether such effort would be worthwhile.</p>
   <p><strong>Ease of authoring</strong>: </p>
-  <p>The <code>&lt;map&gt;</code> element is primarily intended to simplify the authoring of Web maps, eliminating the hard requirement for script or allowing progressive enhancement the behavior of the element 
-    through script. Additionally, the use of declarative markup enables the use of CSS technology for cartographic and other user experience criteria.</p>
+  <p>The <code>&lt;map&gt;</code> element is primarily intended to simplify the authoring of dynamic Web maps, eliminating the hard requirement for script or allowing progressive enhancement of the element 
+    with script. Additionally, the use of declarative markup enables the use of standard CSS techniques for cartographic and other user experience criteria.</p>
 
 </div>
 
@@ -248,13 +248,118 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 <div id="sec-features">
 	<h2 id="features">4. Features</h2>
 	<p>This section is normative.</p>
-	
-	<p><em>Please define the features of the specification here, including the necessary elements, attributes, attribute values, interfaces, methods, and other features.</em></p>
-	
-	<p><em>Authors are encouraged to also describe features in terms of the IDL using Web IDL [<a href="#ref-WebIDL">WebIDL</a>] blocks inline.</em></p>
-	
-	<p class="note"><strong>Note:</strong> Specification authors are encouraged to use the <a href="http://www.w3.org/People/Schepers/spec-conventions.html">W3C Typographic Conventions</a> for marking up and styling their documents.</p>
-	
+        <!-- initially copied from the HTML 5 spec -->
+<h4 id="the-map-element"><span class="secno">4.1</span>The <dfn><code>map</code></dfn> element</h4>
+<dl class="element"><dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-categories">Categories</a>:</dt>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#flow-content-1">Flow content</a>.</dd>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#phrasing-content-1">Phrasing content</a>.</dd>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#palpable-content-0">Palpable content</a>.</dd>
+   <dd>If the element has an <code>is="mapml-map"</code> attribute: <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#embedded-content">Embedded content</a>.</dd>
+   <dd>If the element has an <code>is="mapml-map"</code> attribute: <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#interactive-content">Interactive content</a>.</dd>
+   <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
+   <dd>If the element has an <code>is="mapml-map"</code> attribute: where <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#embedded-content">embedded content</a> is expected.</dd>
+   <dd>If the element does not have an <code>is="mapml-map"</code> attribute: where <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#phrasing-content-1">phrasing content</a> is expected.</dd>
+   <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-content-model">Content model</a>:</dt>
+   <dd>If the element has an <code>is="mapml-map"</code> attribute: zero or more <code>layer</code> elements.</dd>
+   <dd>If the element does not have an <code>is="mapml-map"</code> attribute: <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#transparent">Transparent</a>.</dd>
+   <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-attributes">Content attributes</a>:</dt>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#global-attributes">Global attributes</a></dd>
+   <dd><code><a href="#attr-map-name">name</a></code> - Name of <a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#image-map">image map</a> to reference from the <code><a href="#attr-hyperlink-usemap">usemap</a></code> attribute. If a <code>map</code> element 
+     has a <code>name</code> attribute, it must not have an <code>is="mapml-map"</code> attribute, and vice versa.  <em>In a native implementation it might be possible to drive behavior based on the presence or absence of the 
+     <code>name</code> attribute alone.</em></dd>
+   <dd><code><a href="#attr-map-is">is="mapml-map"</a></code> - designates the <code>map</code> element as a cartographic media element.  If the <code>map</code> element has an <code>is="mapml-map"</code> attribute,
+     it must not have a <code>name</code> attribute, and vice versa.</dd>
+   <dd><code><a href="#attr-map-zoom">zoom</a></code> - a positive integer zoom (scale) value</dd>
+   <dd><code><a href="#attr-map-lat">lat</a></code> - a decimal WGS84 latitude value for the map center</dd>
+   <dd><code><a href="#attr-map-lon">lon</a></code> - a decimal WGS84 longitude value for the map center</dd>
+   <dd><code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#attr-dim-width">width</a></code> - Horizontal dimension</dd>
+   <dd><code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#attr-dim-height">height</a></code> - Vertical dimension</dd>
+  <dt><span>Tag omission in text/html</span>:</dt>
+   <dd>Neither tag is omissible</dd>
+   <dt>Allowed <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#aria-role-attribute">ARIA role attribute</a> values:</dt>
+   <dd>None</dd>
+   <dt>Allowed <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#state-and-property-attributes">ARIA state and property attributes</a>:</dt>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#index-aria-global">Global aria-* attributes</a></dd>
+   <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-dom">DOM interface</a>:</dt>
+   <dd>
+<pre class="idl">interface <dfn id="htmlmapelement">HTMLMapElement</dfn> : <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#htmlelement">HTMLElement</a> {
+           attribute DOMString <a href="#dom-map-name">name</a>;
+  readonly attribute <a href="http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#htmlcollection">HTMLCollection</a> <a href="#dom-map-areas">areas</a>;
+  readonly attribute <a href="http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#htmlcollection">HTMLCollection</a> <a href="#dom-map-images">images</a>;
+};</pre>
+   </dd>
+  </dl>
+<p>The <code><a href="#the-map-element">map</a></code> element, in conjunction with an <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#the-img-element">img</a></code> element and any
+  <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#the-area-element">area</a></code> element descendants, defines an <a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#image-map">image map</a>. The element
+  <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#represents">represents</a> its children.</p>
+<p>The <dfn id="attr-map-name"><code>name</code></dfn> attribute gives the map a name so that
+  it can be referenced. The attribute must be present and must have a non-empty value with no <a href="http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#space-character">space characters</a>. The value of the <code><a href="#attr-map-name">name</a></code> attribute must not be a <a href="infrastructure.html#compatibility-caseless">compatibility-caseless</a> match for the value of the <code data-anolis-xref="attr-map-name"><a href="#attr-map-name">name</a></code> attribute of another <code><a href="#the-map-element">map</a></code> element in the same
+  document. If the <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#the-id-attribute">id</a></code> attribute is also specified, both attributes must
+  have the same value.</p>
+<dl class="domintro"><dt><var>map</var> . <code><a href="#dom-map-areas">areas</a></code></dt>
+
+   <dd>
+
+    <p>Returns an <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#htmlcollection">HTMLCollection</a></code> of the <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#the-area-element">area</a></code> elements in the
+    <code><a href="#the-map-element">map</a></code>.</p>
+
+   </dd>
+
+   <dt><var>map</var> . <code><a href="#dom-map-images">images</a></code></dt>
+
+   <dd>
+
+    <p>Returns an <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#htmlcollection">HTMLCollection</a></code> of the <code><a href="#the-img-element">img</a></code> and <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#the-object-element">object</a></code>
+    elements that use the <code><a href="#the-map-element">map</a></code>.</p>
+
+   </dd>
+
+  </dl>
+<div class="impl">
+
+  <p>The <dfn id="dom-map-areas"><code>areas</code></dfn> attribute must return an
+  <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#htmlcollection">HTMLCollection</a></code> rooted at the <code><a href="#the-map-element">map</a></code> element, whose filter matches only
+  <code><a href="#the-area-element">area</a></code> elements.</p>
+
+  <p>The <dfn id="dom-map-images"><code>images</code></dfn> attribute must return an
+  <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#htmlcollection">HTMLCollection</a></code> rooted at the <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#document">Document</a></code> node, whose filter matches only
+  <code><a href="#the-img-element">img</a></code> and <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#the-object-element">object</a></code> elements that are associated with this <code><a href="#the-map-element">map</a></code>
+  element according to the <a href="#image-map">image map</a> processing model.</p>
+
+  <p>The IDL attribute <dfn id="dom-map-name"><code>name</code></dfn> must <a href="http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#reflect">reflect</a>
+  the content attribute of the same name.</p>
+
+  </div>
+<div class="example">
+
+   <p>Image maps can be defined in conjunction with other content on the page, to ease maintenance.
+   This example is of a page with an image map at the top of the page and a corresponding set of
+   text links at the bottom.</p>
+
+   <pre>&lt;!DOCTYPE HTML&gt;
+&lt;TITLE&gt;Babies™: Toys&lt;/TITLE&gt;
+&lt;HEADER&gt;
+ &lt;H1&gt;Toys&lt;/H1&gt;
+ &lt;IMG SRC="/images/menu.gif"
+      ALT="Babies™ navigation menu. Select a department to go to its page."
+      USEMAP="#NAV"&gt;
+&lt;/HEADER&gt;
+ ...
+&lt;FOOTER&gt;
+ &lt;MAP NAME="NAV"&gt;
+  &lt;P&gt;
+   &lt;A HREF="/clothes/"&gt;Clothes&lt;/A&gt;
+   &lt;AREA ALT="Clothes" COORDS="0,0,100,50" HREF="/clothes/"&gt; |
+   &lt;A HREF="/toys/"&gt;Toys&lt;/A&gt;
+   &lt;AREA ALT="Toys" COORDS="0,0,100,50" HREF="/toys/"&gt; |
+   &lt;A HREF="/food/"&gt;Food&lt;/A&gt;
+   &lt;AREA ALT="Food" COORDS="0,0,100,50" HREF="/food/"&gt; |
+   &lt;A HREF="/books/"&gt;Books&lt;/A&gt;
+   &lt;AREA ALT="Books" COORDS="0,0,100,50" HREF="/books/"&gt;
+ &lt;/MAP&gt;
+&lt;/FOOTER&gt;</pre>
+
+  </div>
 </div>
 
 
@@ -337,8 +442,8 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 
     <dt id="ref-RNG"><strong class="normref">[RELAXNG]</strong></dt>
 	  <dd>
-	    <cite><a href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">Document Schema Definition Languages (DSDL) â€” Part 2: Regular grammar-based validation â€” RELAX NG, ISO/IEC FDIS 19757-2:2002(E)</a></cite>,
-	    J. Clark, <ruby><rb xml:lang="ja">æ�‘ç”° çœŸ</rb> <rp>(</rp><rt><span class="familyname">Murata</span> M.</rt><rp>)</rp></ruby>, eds.
+	    <cite><a href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">Document Schema Definition Languages (DSDL) Ã¢â‚¬â€� Part 2: Regular grammar-based validation Ã¢â‚¬â€� RELAX NG, ISO/IEC FDIS 19757-2:2002(E)</a></cite>,
+	    J. Clark, <ruby><rb xml:lang="ja">Ã¦ï¿½â€˜Ã§â€�Â° Ã§Å“Å¸</rb> <rp>(</rp><rt><span class="familyname">Murata</span> M.</rt><rp>)</rp></ruby>, eds.
 	    International Organization for Standardization, 12 December 2002.
 	    <br/>Available at http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf.
 	  </dd>
