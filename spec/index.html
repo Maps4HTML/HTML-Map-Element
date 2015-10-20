@@ -286,6 +286,7 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
    <dd id="attr-map-zoom"><em><code><a href="#attr-map-zoom">zoom</a></code> - a positive integer zoom (scale) value</em></dd>
    <dd id="attr-map-lat"><em><code><a href="#attr-map-lat">lat</a></code> - a decimal WGS84 latitude value for the map center</em></dd>
    <dd id="attr-map-lon"><em><code><a href="#attr-map-lon">lon</a></code> - a decimal WGS84 longitude value for the map center</em></dd>
+   <dd id="attr-map-projection"><em><code><a href="#attr-map-projection">projection</a></code> - a string <a href="#projections">identifier</a> of the MapML coordinate reference system used by the map. Default is 'OSMTILE'.</em></dd>
    <dd id="attr-map-width"><em><code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#attr-dim-width">width</a></code> - Horizontal dimension</em></dd>
    <dd id="attr-map-height"><em><code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#attr-dim-height">height</a></code> - Vertical dimension</em></dd>
   <dt><span>Tag omission in text/html</span>:</dt>
@@ -301,6 +302,7 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
   <em> readonly attribute unsigned long <a href="#attr-map-zoom">zoom</a>;</em>
   <em> readonly attribute double <a href="#attr-map-lat">lat</a>;</em>
   <em> readonly attribute double <a href="#attr-map-lon">lon</a>;</em>
+  <em> readonly attribute string <a href="#attr-map-projection">projection</a>;</em>
   <em> readonly attribute unsigned long <a href="#attr-map-width">width</a>;</em>
   <em> readonly attribute unsigned long <a href="#attr-map-height">height</a>;</em>
 };</pre>
@@ -325,7 +327,7 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
    <dd id="attr-layer-label"></dd>
    <dd id="attr-layer-src"></dd>
   <dt><span>Tag omission in text/html</span>:</dt>
-   <dd>Neither tag is omissible</dd>
+   <dd>No end tag</dd>
    <dt>Allowed <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#aria-role-attribute">ARIA role attribute</a> values:</dt>
    <dd>None</dd>
    <dt>Allowed <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#state-and-property-attributes">ARIA state and property attributes</a>:</dt>
@@ -338,6 +340,173 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 };</pre>
    </dd>
   </dl>
+<h4 id="projections"><span class="secno">4.1.2 </span>Projection identifiers</h4>
+<p>The following table summarizes the <a href="#attr-map-projection"><code>projection</code></a> identifier values that are defined by this specification.</p>
+
+<table>
+   <thead>
+    <tr>
+     <th>Projection value</th>
+     <th>Description</th>
+     <th>Base CRS / Projection system</th>
+     <th>Origin (x,y)</th>
+     <th>Tile row/column size (px)</th>
+     <th>Projected Bounds / LatLng Bounds</th>
+     <th>Zoom level</th>
+     <th>Resolution</th>
+    </tr>
+   </thead>
+   <tbody>
+
+    <tr>
+     <td><code>OSMTILE</code></td>
+     <td>Default value of the <a href="#attr-map-projection">projection</a> attribute.  Web Mercator-based tiled coordinate reference system.</td>
+     <td><code>EPSG::3857 / Spherical Mercator</code></td>
+     <td>-20037508.342787, 20037508.342787</td>
+     <td>256/256</td>
+     <td>LatLng(-85.0511287798,-180), LatLng(85.0511287798,180)</td>
+     <td>                  0<br>
+                  1<br>
+                  2<br>
+                  3<br>
+                  4<br>
+                  5<br>
+                  6<br>
+                  7<br>
+                  8<br>
+                  9<br>
+                  10<br>
+                  11<br>
+                  12<br>
+                  13<br>
+                  14<br>
+                  15<br>
+                  16<br>
+                  17<br>
+                  18<br>
+
+</td>
+     <td>            156543.0339<br>
+                     78271.51695<br>
+                     39135.758475<br>
+                     19567.8792375<br>
+                     9783.93961875<br>
+                     4891.969809375<br>
+                     2445.9849046875<br>
+                     1222.9924523438<br>
+                     611.49622617188<br>
+                     305.74811308594<br>
+                     152.87405654297<br>
+                     76.437028271484<br>
+                     38.218514135742<br>
+                     19.109257067871<br>
+                     9.5546285339355<br>
+                     4.7773142669678<br>
+                     2.3886571334839<br>
+                     1.1943285667419<br>
+                     0.59716428337097<br>   
+</td>
+    </tr>
+    <tr>
+     <td><code>CBMTILE</code></td>
+     <td>Lambert Conformal Conic-based tiled coordinate reference system for Canada.</td>
+     <td><code>EPSG::3978 / Lambert Conformal Conic</code></td>
+     <td>-34655800, 39310000</td>
+     <td>256/256</td>
+     <td>-7786476.885838887, -5153821.09213678, 7148753.233541353, 7928343.534071138</td>
+     <td>0<br>
+                  1<br>
+                  2<br>
+                  3<br>
+                  4<br>
+                  5<br>
+                  6<br>
+                  7<br>
+                  8<br>
+                  9<br>
+                  10<br>
+                  11<br>
+                  12<br>
+                  13<br>
+                  14<br>
+                  15<br>
+                  16<br>
+                  17<br></td>
+     <td>                             38364.660062653464<br> 
+                 22489.62831258996<br> 
+                 13229.193125052918<br> 
+                 7937.5158750317505<br> 
+                 4630.2175937685215<br> 
+                 2645.8386250105837<br>
+                 1587.5031750063501<br>
+                 926.0435187537042<br> 
+                 529.1677250021168<br> 
+                 317.50063500127004<br> 
+                 185.20870375074085<br> 
+                 111.12522225044451<br> 
+                 66.1459656252646<br> 
+                 38.36466006265346<br> 
+                 22.48962831258996<br>
+                 13.229193125052918<br>
+                 7.9375158750317505<br> 
+                 4.6302175937685215<br>    
+
+</td>
+    </tr>
+    <tr>
+     <td><code>APSTILE</code></td>
+     <td>Alaska Polar Stereographic-based tiled coordinate reference system for the Arctic region.</td>
+     <td><code>EPSG::5936 / Polar Stereographic</code></td>
+     <td>-28567784.109255, 32567784.109255</td>
+     <td>256/256</td>
+     <td>-28567784.109254867, -28567784.109254755, 32567784.109255023, 32567784.10925506</td>
+     <td>         
+                  0<br>
+                  1<br>
+                  2<br>
+                  3<br>
+                  4<br>
+                  5<br>
+                  6<br>
+                  7<br>
+                  8<br>
+                  9<br>
+                  10<br>
+                  11<br>
+                  12<br>
+                  13<br>
+                  14<br>
+                  15<br>
+                  16<br>
+                  17<br>
+                  18<br>
+                  19<br></td>
+     <td>                             238810.813354<br>
+                  119405.406677<br>
+                  59702.7033384999<br>
+                  29851.3516692501<br>
+                  14925.675834625<br>
+                  7462.83791731252<br>
+                  3731.41895865639<br>
+                  1865.70947932806<br>
+                  932.854739664032<br>
+                  466.427369832148<br>
+                  233.213684916074<br>
+                  116.606842458037<br>
+                  58.3034212288862<br>
+                  29.1517106145754<br>
+                  14.5758553072877<br>
+                  7.28792765351156<br>
+                  3.64396382688807<br>
+                  1.82198191331174<br>
+                  0.910990956788164<br>
+                  0.45549547826179<br>    
+
+</td>
+    </tr>
+   </tbody>
+</table>
+
         
 <h4 id="web-maps"><span class="secno">4.2 </span>Web maps</h4>
 <div class="impl">
