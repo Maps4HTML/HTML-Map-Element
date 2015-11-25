@@ -4,7 +4,7 @@
 
 
   
-      <title>&lt;map&gt; Element Proposal</title>
+      <title>&lt;web-map&gt; Element Proposal</title>
   
   <link class="required" rel="stylesheet" href="http://www.w3.org/StyleSheets/TR/w3c-unofficial.css" type="text/css"/>
   <link rel="stylesheet" type="text/css" href="http://www.w3.org/StyleSheets/TR/w3c-tr.css" />
@@ -46,15 +46,24 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
        dl.domintro dt, dl.domintro dt * { color: black; text-decoration: none; }
        dl.domintro dd { margin: 0.5em 0 1em 2em; padding: 0; }
        dl.domintro dd p { margin: 0.5em 0; }
+       dl.domintro:before { display: table; margin: -1em -0.5em -0.5em auto; width: auto; content: 'This definition is non-normative. Implementation requirements are given below this definition.'; color: #606060; border:1px solid lightgray; background: white; padding: 0 0.25em;font-size:.9em;}
+       dl.switch { padding-left: 2em; }
+       dl.switch > dt { text-indent: -1.5em; }
+       dl.switch > dt:before { content: '\21AA'; padding: 0 0.5em 0 0; display: inline-block; width: 1em; text-align: right; line-height: 0.5em; }
+       dl.triple { padding: 0 0 0 1em; }
+       dl.triple dt, dl.triple dd { margin: 0; display: inline }
+       dl.triple dt:after { content: ':'; }
+       dl.triple dd:after { content: '\A'; white-space: pre; }
        /*dl.domintro:before { display: table; margin: -1em -0.5em -0.5em auto; width: auto; content: 'This definition is non-normative. Implementation requirements are given below this definition.'; color: #606060; border:1px solid lightgray; background: white; padding: 0 0.25em;font-size:.9em;}*/
       @media screen { code { color: #D93B00; } code :link, code :visited { color: inherit; } }
       
       .example { display: block; color: #222222; background: #FCFCFC; border-left-style: solid;border-color:#c0c0c0; border-left-width: 0.25em; margin-left: 1em; padding-left: 1em;padding-bottom: 0.5em;}
       div.example:before { content: 'Code Example: '; font-weight: bolder;}
        td > .example:only-child { margin: 0 0 0 0.1em; }
+       dt, dfn { font-weight: bold; font-style: normal; }
   </style>
   <script src="http://maps4html.github.io/Map-Custom-Element/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-  <link rel="import" href="http://maps4html.github.io/Map-Custom-Element/mapml-map.html">
+  <link rel="import" href="http://maps4html.github.io/Map-Custom-Element/web-map.html">
 
 </head>
 <body>
@@ -64,9 +73,9 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 
 <!-- <p id="logo"></p> -->
 
-<h1>The &lt;map&gt; HTML Element proposal</h1>
+<h1>The &lt;web-map&gt; HTML Element proposal</h1>
 
-<h2 id="pagesubtitle"><time datetime="2015-08-31">August 31st, 2015</time></h2>
+<h2 id="pagesubtitle"><time datetime="2015-11-24">November 24th, 2015</time></h2>
 
 <dl>
   <dt>This version:</dt>
@@ -97,7 +106,7 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
     while useful, is limited to the simplest of mapping applications.  A more generally useful &lt;map&gt; element would enable (functions like) zooming and panning of the map 
     in a traditional Web mapping way, while simultaneously being equally simple and declarative for an HTML author to include on their Web page.  This specification proposes the syntax and semantics of such an element.</p>
 <p>The applications of Web maps are diverse.  The wide scope of use of Web maps appears similarly broad to that of other Web media types, such as video or audio.  In other words, there are a multitude of reasons for wanting to include
-a map on your Web page.  While not wishing to exclude the excellent large Web map providers, but equally not wishing to exclude other provider options, the HTML &lt;map&gt; element proposed by this document should be provider-agnostic, 
+a map on your Web page.  The HTML &lt;web-map&gt; element proposed by this document should be provider-agnostic, 
 and should only depend on Web standards, including Uniform Resource Identifiers, Document Object Model, Cascading Style Sheets and media types.  To that end, the present specification is a sibling to another related specification 
 proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 <div id="sotd">
@@ -113,7 +122,7 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 
   <h3>Intent of this Specification</h3>
   
-  <p>This specification is intended as a proposal to the HTML Working Group to extend the semantics of the &lt;map&gt; element.</p>
+  <p>This specification is intended as a proposal to the HTML Working Group to extend the semantics of the &lt;web-map&gt; element.</p>
 	
 
   <h3>Implementation Experience</h3>
@@ -158,9 +167,19 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 		</li>
 		<li>4. <a href="#features">Features</a>
                   <ul>
-                    <li>4.1 <a href="#the-map-element">The <code>map</code> element</a>
-                    <li>4.1.1 <a href="#the-layer-element">The <code>layer</code> element</a>
-                    <li>4.2 <a href="#web-maps">Web maps</a></li>
+                    <li>4.1 <a href="#web-map-elements">Web mapping elements and API</a></li>
+                    <li>4.1.1 <a href="#the-web-map-element">The <code>web-map</code> element</a>
+                      <ul>
+                        <li>4.1.1.1 <a href="#projections">Projections</a></li>
+                      </ul>
+                    </li>
+                        
+                    <li>4.1.2 <a href="#the-map-layer-element">The <code>map-layer</code> element</a></li>
+                    <li>4.1.3 <a href="#the-map-area-element">The <code>map-area</code> element</a></li>
+                    <li>4.2 <a href="#web-maps">Web maps</a>
+                      <ul><li>4.2.1 <a href="#authoring">Authoring</a></li></ul>
+                    </li>
+                    
                   </ul>
                 </li>
 		<li>5. <a href="#security">Security Considerations</a></li>
@@ -181,13 +200,11 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 	<h2 id="intro">1. Introduction</h2>
 	<p>This section is informative.</p>
 	
-        <p>This specification extends the role of the <code>&lt;map&gt;</code> element in HTML.  The semantics of the standard <code>&lt;map&gt;</code> element allow the HTML author to 
-            create areas over a static HTML which act as hyperlinks.  This specification adds syntax and semantics to the <code>&lt;map&gt;</code> element, allowing it to be used in 
-           cartographic Web applications as an actual Web map.  The intention of this specification is to describe the extended syntax and semantics of the new mode for the 
-           <code>&lt;map&gt;</code> element, independent of underlying technology - whether that be native browser or Web Components.   However, it is noted here that in order
-           to access the extended semantics described in this specification when using the Polymer-based Custom Type Extension Element implementation only, the main syntactic 
-           requirement (not elsewhere described in this specification) is to add the &lt; map is="mapml-map"&gt; attribute.  Details specific to how to author a Web page using the 
-           Polymer Custom Type Extension Element implementation can be found in the <a href="#ref-Map-Custom-Element">HTML Map Custom Type Extension Element project</a></p>
+        <p>This specification introduces the proposed <code>&lt;web-map&gt;</code> element for HTML.  The semantics of the standard <code>&lt;map&gt;</code> element allow the HTML author to 
+            create areas over a static HTML image which act as hyperlinks.  The <code>&lt;web-map&gt;</code> element standardizes the core functionality of
+           cartographic Web applications.  The intention of this specification is to describe the <code>&lt;web-map&gt;</code> element independent of underlying technology - 
+           whether that be native browser or Web Components.   Details specific to how to author a Web page using the 
+           Polymer Custom Element implementation can be found in the <a href="#ref-Map-Custom-Element">HTML Web Map Custom Element project</a></p>
 	
 </div>
 
@@ -210,16 +227,16 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 	<p>This section is informative.</p>
 	
 	<h3 id="use-cases">3.1. Use Cases</h3>
-  <p>The following use cases illustrate some of the ways in which the <code>&lt;map&gt;</code> element might be used in Web mapping applications:</p>
+  <p>The following use cases illustrate some of the ways in which the <code>&lt;web-map&gt;</code> element might be used in Web mapping applications:</p>
 
   <ul>
     <li><strong>Multiple, user-controllable map layers</strong>
-      <p>The <code>&lt;map&gt;</code> element allows HTML authors to add zero or more map layers to the map, with optional controls accessible declaratively.</p>
+      <p>The <code>&lt;web-map&gt;</code> element allows HTML authors to add zero or more map layers to the map, with optional controls enabled declaratively.</p>
     </li>
     
     <li><strong>Selection / identification / description of map features</strong>
       <p>
-        The user should be able to interact with individual map features as though they are individual hyperlinks.
+        The user should be able to interact with individual map features as individual elements, with or without hyperlinks.
       </p>
     </li>
     <li><strong>Rescaling to expose greater detail (zooming)</strong>
@@ -230,23 +247,35 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
       <p>The user should be able to pan the map so as to examine locations other than the default or initial location displayed, as desired / possible.</p>
     </li>
     <li><strong>Using Cascading Style Sheets to give power to HTML authors to control map styles</strong>
-      <p>The HTML author should be able to use Cascading Style Sheets on the <code>&lt;map&gt;</code> element and its children so as to create the user experience desired / possible.  The style of features presented by
-        map services should be under the control of the service provider, per [<a href="#ref-MapML">MapML</a>] requirements.</p>
+      <p>The HTML author should be able to use Cascading Style Sheets on the <code>&lt;web-map&gt;</code> element and its children so as to create the user experience desired, 
+        however the style of features in map sources / services should be under the control of the map content author, per [<a href="#ref-MapML">MapML</a>] requirements.</p>
     </li>
-    <li><strong>Links within and between services to enable a "Web of maps"</strong></li>
-    <li><strong>JavaScript API-level access to the map, its layers and features</strong></li>
-    <li><strong>Crawler-generated location-enabled, searchable indexes of Web content</strong></li>
+    <li><strong>Map links of various shapes, including points, lines, polygons, circles and rectangles</strong>
+      <p>HTML authors should be able to place and style links on a web map, allowing navigation of the browser through user selection.  </p>
+    </li>
+    <li><strong>Links within and between services to enable a "Web of maps"</strong>
+      <p>A map layer could be "distributed" over many URLs, and the user agent would seamlessly present the contents of those URLs to the user, possibly although not necessarily as though
+      they were a single end point.  For example, a response document should be able to communicate a link to an adjacent zoom level or geographic area in the response entity and the user agent 
+      could conditionally follow that link depending on the gestures of the user. </p>
+    </li>
+    <li><strong>API-level access to the map, its layers and features</strong>
+      <p>Scripting has an important place in the presentation of map information.  Declarative web maps should be able to be progressively enhanced through the use of script.</p>
+    </li>
+    <li><strong>Crawler-generated location-enabled, searchable indexes of Web content</strong>
+      <p>Web maps should serve to geocode content in a Web page, such that crawlers may be able to augment their indexes with location information, leading to enhanced discovery possibilities for
+      Web search users.</p>
+    </li>
   </ul>
 
 
   <h3 id="requirements">3.2. Requirements</h3>
 
   <p><strong>Implementation commitments</strong>:  </p>
-  <p>The Custom Type Extension Element implementation has access to and uses the facilities (for example, SVG support) provided by browsers to simulate the behavior of a potential native implementation, 
-    and to the extent that those facilities work similarly / are standard across browser implementations, the Custom Type Extension Element is functional.  However, as the Custom Element implementation 
-    is intended to provide a proof of concept, efforts to polyfill browser provided facilities such as SVG support have not been made to date.  It is unclear whether such effort would be worthwhile.</p>
+  <p>The <code>web-map</code> Custom Element implementation has access to and uses the facilities provided by browsers (for example SVG support) to simulate the behavior of a potential native implementation, 
+    and to the extent that those facilities work similarly / are standard across browser implementations, the <code>web-map</code> Custom Element is functional.  However, as the <code>web-map</code> Custom Element implementation 
+    is intended to provide a proof of concept, efforts to polyfill browser-provided facilities such as SVG have not been made to date.  It is unclear whether such effort would be worthwhile.</p>
   <p><strong>Ease of authoring</strong>: </p>
-  <p>The <code>&lt;map&gt;</code> element is primarily intended to simplify the authoring of dynamic Web maps, eliminating the hard requirement for script or allowing progressive enhancement of the element 
+  <p>The <code>&lt;web-map&gt;</code> element is primarily intended to simplify the authoring of dynamic Web maps, eliminating the hard requirement for script or allowing progressive enhancement of the element 
     with script. Additionally, the use of declarative markup enables the use of standard CSS techniques for cartographic and other user experience criteria.</p>
 
 </div>
@@ -255,40 +284,139 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 
 <div id="sec-features">
 	<h2 id="features">4. Features</h2>
-	<p>This section is normative.</p>
-<p>The <code><a href="#the-map-element">map</a></code> element has two modes. In the first mode, hereinafter called the <a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#image-map">image map</a> 
-  mode, the <code><a href="#the-map-element">map</a></code> element in conjunction with an <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#the-img-element">img</a></code> element and any
-  <code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#the-area-element">area</a></code> element descendants, defines an 
-  <a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#image-map">image map</a>.   In <a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#image-map">image map</a> mode,
-  the element  <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#represents">represents</a> its children.  The syntax and semantics  of the 
-  <a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#image-map">image map</a> mode are described by the HTML standard [<a href="#ref-HTML">HTML</a>]; the remainder of this document will
-  define the second mode for the <code><a href="#the-map-element">map</a></code> element.
-</p>
-        <p>In the second mode, called the <code><a href="#web-maps">Web map</a></code> mode, the <code><a href="#the-map-element">map</a></code> element, in conjunction with any <code><a href="#the-layer-element">layer</a></code> element descendants, 
-  defines an interactive <code>Web map</code> media element.  The <code>Web map</code> mode is defined by this document. </p>
+        <p>The <code><a href="#the-web-map-element">web-map</a></code> element, in conjunction with any <code><a href="#the-map-layer-element">map-layer</a></code> and <code><a href="#the-map-area-element">map-area</a></code> element descendants, 
+  defines an interactive <code>Web map</code> media element. </p>
         
         <!-- initially copied from the HTML 5 spec -->
-<h5 id="the-map-element"><em><span class="secno">4.1</span> The <dfn><code>map</code></dfn> element <code><a href="#web-maps">Web map</a></code> mode</em></h5>
+        <h3 id="web-map-elements">4.1 Web mapping elements and API</h3>
+        	<p>This section is normative.</p>
+
+<h5 id="the-web-map-element"><em><span class="secno">4.1.1</span> The <dfn><code>web-map</code></dfn> element</em></h5>
 <dl class="element"><dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-categories">Categories</a>:</dt>
    <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#flow-content-1">Flow content</a>.</dd>
    <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#phrasing-content-1">Phrasing content</a>.</dd>
    <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#palpable-content-0">Palpable content</a>.</dd>
-   <dd><em>If the element has an <code>is="mapml-map"</code> attribute: <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#embedded-content">Embedded content</a>.</em></dd>
-   <dd><em>If the element has an <code>is="mapml-map"</code> attribute: <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#interactive-content">Interactive content</a>.</em></dd>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#embedded-content">Embedded content</a>.</dd>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#interactive-content">Interactive content</a>.</dd>
    <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
-   <dd><em>If the element has an <code>is="mapml-map"</code> attribute: where <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#embedded-content">embedded content</a> is expected.</em></dd>
-   <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-content-model">Content model</a>:</dt>
-   <dd><em>Zero or more <a href="#the-layer-element"><code>layer</code></a> elements.</em></dd>
+   <dd><em>Where <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#embedded-content">embedded content</a> is expected.</em></dd>
+   <dt id="map-content"><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-content-model">Content model</a>:</dt>
+   <dd><em>Zero or more <a href="#the-map-layer-element"><code>map-layer</code></a> elements.</em></dd>
    <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-attributes">Content attributes</a>:</dt>
    <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#global-attributes">Global attributes</a></dd>
-   <dd><em><code><a href="#attr-map-is">is="mapml-map"</a></code> - designates the <code>map</code> element as a cartographic media element.  If the <code>map</code> element has an <code>is="mapml-map"</code> attribute,
-       it must not have a <a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-map-element"><code>name</code></a> attribute, and vice versa.</em></dd>
-   <dd id="attr-map-zoom"><em><code><a href="#attr-map-zoom">zoom</a></code> - a positive integer zoom (scale) value</em></dd>
-   <dd id="attr-map-lat"><em><code><a href="#attr-map-lat">lat</a></code> - a decimal WGS84 latitude value for the map center</em></dd>
-   <dd id="attr-map-lon"><em><code><a href="#attr-map-lon">lon</a></code> - a decimal WGS84 longitude value for the map center</em></dd>
-   <dd id="attr-map-projection"><em><code><a href="#attr-map-projection">projection</a></code> - a string <a href="#projections">identifier</a> of the MapML coordinate reference system used by the map. Default is 'OSMTILE'.</em></dd>
-   <dd id="attr-map-width"><em><code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#attr-dim-width">width</a></code> - Horizontal dimension</em></dd>
-   <dd id="attr-map-height"><em><code><a href="http://www.w3.org/TR/2014/REC-html5-20141028/embedded-content-0.html#attr-dim-height">height</a></code> - Vertical dimension</em></dd>
+   <dd id="attr-web-map-zoom"><em><code><a href="#attr-web-map-zoom">zoom</a></code> - a positive integer zoom (scale) value</em></dd>
+   <dd id="attr-web-map-lat"><em><code><a href="#attr-web-map-lat">lat</a></code> - a decimal WGS84 latitude value for the map center</em></dd>
+   <dd id="attr-web-map-lon"><em><code><a href="#attr-web-map-lon">lon</a></code> - a decimal WGS84 longitude value for the map center</em></dd>
+   <dd id="attr-web-map-projection"><em><code><a href="#attr-web-map-projection">projection</a></code> - a string <a href="#projections">identifier</a> of the MapML coordinate reference system used by the map. Default is 'OSMTILE'.</em></dd>
+   <dd id="attr-web-map-controls"><em><code><a href="#attr-web-map-controls">controls</a></code> - Show user agent controls</em></dd>
+   <dd id="attr-web-map-width"><em><code><a href="#attr-web-map-width">width</a></code> - Horizontal dimension</em></dd>
+   <dd id="attr-web-map-height"><em><code><a href="#attr-web-map-height">height</a></code> - Vertical dimension</em></dd>
+  <dt><span>Tag omission in text/html</span>:</dt>
+   <dd>Neither tag is omissible</dd>
+   <dt>Allowed <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#aria-role-attribute">ARIA role attribute</a> values:</dt>
+<dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#index-aria-application"><code title="">application</code></a></dd>
+<dt>Allowed <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#state-and-property-attributes">ARIA state and property attributes</a>:</dt>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#index-aria-global">Global aria-* attributes</a></dd>
+   <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-dom">DOM interface</a>:</dt>
+   <dd>
+<pre class="idl">[NamedConstructor=WebMap(unsigned long width, unsigned long height, double lat, double lon, unsigned short zoom, optional string projection, boolean controls)]
+interface <dfn id="htmlweb-mapelement">HTMLWebMapElement</dfn> : <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#htmlelement">HTMLElement</a> {
+  <em> readonly attribute <a target="_blank" href="http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#htmlcollection">HTMLCollection</a> <a href="#map-content">layers</a>;</em>
+  <em> readonly attribute <a target="_blank" href="http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#htmlcollection">HTMLCollection</a> <a href="#map-content">areas</a>;</em>
+  <em> readonly attribute unsigned short <a href="#attr-web-map-zoom">zoom</a>;</em>
+  <em> readonly attribute double <a href="#attr-web-map-lat">lat</a>;</em>
+  <em> readonly attribute double <a href="#attr-web-map-lon">lon</a>;</em>
+  <em> readonly attribute string <a href="#attr-web-map-projection">projection</a>;</em>
+  <em> attribute boolean <a href="#attr-web-map-controls">controls</a>;</em>
+  <em> attribute unsigned long <a href="#attr-web-map-width">width</a>;</em>
+  <em> attribute unsigned long <a href="#attr-web-map-height">height</a>;</em>
+  <em> void zoomTo(double latitude, double longitude, optional unsigned short zoom);</em>
+};</pre>
+   </dd>
+  </dl>
+<div class="impl">
+  <p id="implementation">The <code>web-map</code> element, in conjunction with child <code>map-layer</code> and optionally <code>map-area</code> elements, allows authors to embed an interactive web mapping application in a rectangular area of a web page.  
+    The <code>lat</code>, <code>lon</code> attributes locate the initial center of the map.  The <code>zoom</code> attribute indirectly identifies an initial scale of the map.
+    After initialization, the <code>lat</code>,<code>lon</code> and <code>zoom</code> IDL properties reflect the location and scale of the map respectively, based on changes initiated
+    by the user or by script.</p>
+  <dl class="domintro"><dt><var data-anolis-xref="">web-map</var> . <code data-anolis-xref="dom-web-map-areas"><a href="#dom-web-map-areas">areas</a></code></dt>
+   <dd>
+    <p>Returns an <code><a href="http://www.w3.org/TR/html5/infrastructure.html#htmlcollection">HTMLCollection</a></code> of the 
+      <code><a href="#the-map-area-element">map-area</a></code> elements in the
+    <code><a href="#the-web-map-element">web-map</a></code>.</p>
+   </dd>
+   <dt><var data-anolis-xref="">web-map</var> . <code data-anolis-xref="dom-web-map-layers"><a href="#dom-web-map-layers">layers</a></code></dt>
+   <dd>
+    <p>Returns an <code><a href="http://www.w3.org/TR/html5/infrastructure.html#htmlcollection">HTMLCollection</a></code> of the 
+      <code><a href="#the-map-layer-element">map-layer</a></code> element children of the <code><a href="#the-web-map-element">web-map</a></code>.</p>
+   </dd>
+  </dl>
+  <p>The <code>areas</code> attribute must return an <code><a href="http://www.w3.org/TR/html5/infrastructure.html#htmlcollection">HTMLCollection</a></code> 
+    rooted at the <code>web-map</code> element, whose filter matches only <code>map-area</code> child elements.</p>
+
+  <p>The <code>layers</code> attribute must return an <code><a href="http://www.w3.org/TR/html5/infrastructure.html#htmlcollection">HTMLCollection</a></code> 
+    rooted at the <code>web-map</code> node, whose filter matches only <code>map-layer</code> child elements of this <code>web-map</code> element.</p>
+
+<p>The <code>controls</code> boolean attribute indicates whether default map controls should be displayed on the map.  The nature and position of the controls 
+    is subject to user agent implementation.  The controls can be added or removed by toggling the controls property of the element.
+  </p>
+  <p>The <code>projection</code> attribute value <a href="#projections">identifies</a> the coordinate system for the map and all the <code>map-layer</code> element children, with the exception of
+    <code>map-layer</code> children in the WGS84 projection.  WGS84 serves as a "wild-card" projection; features encoded in longitude, latitude values according to this projection can often be re-projected for
+    use on maps encoded in other projections.  As such, <code>map-layer</code> children do not have a projection attribute, in that they are verified to share the projection declared by their
+    parent <code>web-map</code> element.  Once established, the projection of the <code>web-map</code> is read-only.</p>
+  <p>The required <code>width</code> and <code>height</code> attributes of the <code>web-map</code> element allow the HTML author to explicitly set the size of the rectangular area devoted to the map.
+  If the attributes are not set directly, their values can be set via CSS width and height properties.  The map can be re-sized via changes to those properties. </p>
+  <p>The location and zoom level of the map created with the <code>web-map</code> element can be changed via the zoomTo() API method.</p>
+</div>
+<h4 id="projections"><span class="secno">4.1.1.1 </span>Projection identifiers</h4>
+<p>The following table summarizes the <a href="#attr-web-map-projection"><code>projection</code></a> attribute values that are used by this specification. Unless otherwise specified,
+ units are based on pixels projected and transformed from the units of the underlying projection system. The complete definition of these coordinate reference systems can be found in the
+ <a href="#ref-MapML">Map Markup Language specification</a>.</p>
+
+<table>
+   <thead>
+    <tr>
+     <th>Projection value</th>
+     <th>Description</th>
+    </tr>
+   </thead>
+   <tbody>
+
+    <tr>
+     <td><code>OSMTILE</code></td>
+     <td>Default value of <a href="#attr-web-map-projection">projection</a> if unspecified.  Web Mercator-based (EPSG::3857) tiled coordinate reference system.</td>
+    </tr>
+    <tr>
+     <td><code>CBMTILE</code></td>
+     <td>Lambert Conformal Conic-based tiled coordinate reference system for Canada, EPSG::3978.</td>
+    </tr>
+    <tr>
+     <td><code>APSTILE</code></td>
+     <td>Alaska Polar Stereographic-based tiled coordinate reference system for the Arctic region, EPSG::5936.</td>
+    </tr>
+    <tr>
+     <td><code>WGS84</code></td>
+     <td>World Geodetic System 1984 EPSG::4326, units are based on longitude-latitude decimal degree coordinate pairs.</td>
+    </tr>
+   </tbody>
+</table>
+<h5 id="the-map-layer-element"><em><span class="secno">4.1.2</span> The <dfn><code>map-layer</code></dfn> element</em></h5>
+<dl class="element"><dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-categories">Categories</a>:</dt>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#flow-content-1">Flow content</a>.</dd>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#phrasing-content-1">Phrasing content</a>.</dd>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#palpable-content-0">Palpable content</a>.</dd>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#embedded-content">Embedded content</a>.</dd>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#interactive-content">Interactive content</a>.</dd>
+   <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
+   <dd>As a child of the <a href="#the-web-map-element">web-map</a> element</dd>
+   <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-content-model">Content model</a>:</dt>
+   <dd>Empty</dd>
+   <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-attributes">Content attributes</a>:</dt>
+   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#global-attributes">Global attributes</a></dd>
+   <dd id="attr-layer-src"><em><code><a href="#attr-layer-src">src</a></code> - Address of the resource</em></dd>
+   <dd id="attr-layer-label"><em><code><a href="#attr-layer-label">label</a></code> - User-visible label</em></dd>
+   <dd id="attr-layer-checked"><em><code><a href="#attr-layer-checked">checked</a></code> - Layer on/off status</em></dd>
+   <dd id="attr-layer-hidden"><em><code><a href="#attr-layer-hidden">hidden</a></code> - Visibility status of the layer in the layer control</em></dd>
   <dt><span>Tag omission in text/html</span>:</dt>
    <dd>Neither tag is omissible</dd>
    <dt>Allowed <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#aria-role-attribute">ARIA role attribute</a> values:</dt>
@@ -297,216 +425,141 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
    <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#index-aria-global">Global aria-* attributes</a></dd>
    <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-dom">DOM interface</a>:</dt>
    <dd>
-<pre class="idl">interface <dfn id="htmlmapelement">HTMLMapElement</dfn> : <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#htmlelement">HTMLElement</a> {
-  <em> readonly attribute <a href="http://www.w3.org/TR/2014/REC-html5-20141028/infrastructure.html#htmlcollection">HTMLCollection</a> <a href="#dom-map-layers">layers</a>;</em>
-  <em> readonly attribute unsigned long <a href="#attr-map-zoom">zoom</a>;</em>
-  <em> readonly attribute double <a href="#attr-map-lat">lat</a>;</em>
-  <em> readonly attribute double <a href="#attr-map-lon">lon</a>;</em>
-  <em> readonly attribute string <a href="#attr-map-projection">projection</a>;</em>
-  <em> readonly attribute unsigned long <a href="#attr-map-width">width</a>;</em>
-  <em> readonly attribute unsigned long <a href="#attr-map-height">height</a>;</em>
+<pre class="idl">interface <dfn id="htmllayerelement">HTMLMapLayerElement</dfn> : <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#htmlelement">HTMLElement</a> {
+  <em> readonly attribute DOMString <a href="#attr-layer-src">src</a>;</em>
+  <em>          attribute DOMString <a href="#attr-layer-label">label</a>;</em>
+  <em>          attribute boolean <a href="#attr-layer-checked">checked</a>;</em>
+  <em> readonly attribute boolean <a href="#attr-layer-disabled">disabled</a>;</em>
+  <em>          attribute boolean <a href="#attr-layer-hidden">hidden</a>;</em>
 };</pre>
    </dd>
   </dl>
 <div class="impl">
-<p id="todo3"><a href="https://github.com/Maps4HTML/HTML-Map-Element/issues/3" target="_blank">TO DO</a></p>
+  <p>The <code>web-map</code> element displays its child <code>map-layer</code> elements similarly to "acetate" layers on a (paper) map.  The layers follow the <a href="http://www.w3.org/TR/SVG/render.html#PaintersModel">painters model</a>, whereby
+    <code>map-layer</code> elements are displayed on top of earlier siblings according to their document order.  <code>map-layer</code> transparency is controlled by the CSS opacity property.</p>
+   
+  <p>Unlike the <a href="http://www.w3.org/TR/html5/embedded-content-0.html#media-element"> HTML media elements' <code>source</code></a> child element where a single <code>source</code> element is selected by the user agent for play, the <code>map-layer</code> element can 
+    be combined with sibling <code>map-layer</code> elements via the map presented by the parent <code>web-map</code> element. The display of the <code>map-layer</code> is controlled by
+    the <code>checked</code> boolean attribute.  If checked, the <code>map-layer</code> is drawn on the map in the sequence it is found in the parent element.</p>
+  <p>The <code>src</code> attribute value is the URL of a web resource encoded in <a href="#ref-MapML">Map Markup Language</a>.</p>
+  <p>The <code>hidden</code> boolean attribute can be set to remove the <code>map-layer</code> from the <em>map layer control, but it will remain displayed on the map</em>.  In order to
+    remove the <code>map-layer</code> from the map display, it can be have its <code>checked</code> property toggled, or be removed from the DOM.</p>
+  <p>The <code>disabled</code> property is a read-only boolean indicator of the visibility of the layer on the map.  If the layer is not visible for reasons including projection,
+  zoom or extent mismatch, the property will be true and if present in the layer control, it will be disabled in that control i.e. not checkable.</p>
+ 
 </div>
-<h5 id="the-layer-element"><em><span class="secno">4.1.1</span> The <dfn><code>layer</code></dfn> element</em></h5>
+<h5 id="the-map-area-element"><em><span class="secno">4.1.3</span> The <dfn><code>map-area</code></dfn> element</em></h5>
 <dl class="element"><dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-categories">Categories</a>:</dt>
    <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#flow-content-1">Flow content</a>.</dd>
    <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#phrasing-content-1">Phrasing content</a>.</dd>
-   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#palpable-content-0">Palpable content</a>.</dd>
-   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#embedded-content">Embedded content</a>.</dd>
-   <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#interactive-content">Interactive content</a>.</dd>
    <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-contexts">Contexts in which this element can be used</a>:</dt>
-   <dd>As a child of the <a href="#the-map-element">map</a> element in <a href="#web-maps">Web map</a> mode</dd>
+   <dd>As a child of the <a href="#the-web-map-element">web-map</a> element</dd>
    <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-content-model">Content model</a>:</dt>
    <dd>Empty</dd>
    <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-attributes">Content attributes</a>:</dt>
    <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#global-attributes">Global attributes</a></dd>
-   <dd id="attr-layer-label"></dd>
-   <dd id="attr-layer-src"></dd>
+   <dd id="attr-area-href"><em><code><a href="#attr-area-href">href</a></code> - Address of the hyperlink</em></dd>
+   <dd id="attr-area-alt"><em><code><a href="#attr-area-alt">alt</a></code> - User-visible label</em></dd>
+   <dd id="attr-area-coords"><em><code><a href="#attr-area-coords">coords</a></code> - Coordinates for the shape to be created on the map</em></dd>
+   <dd id="attr-area-shape"><em><code><a href="#attr-area-shape">shape</a></code> - The kind of shape to be created on the map</em></dd>
   <dt><span>Tag omission in text/html</span>:</dt>
-   <dd>No end tag</dd>
+   <dd>Neither tag is omissible</dd>
    <dt>Allowed <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#aria-role-attribute">ARIA role attribute</a> values:</dt>
-   <dd>None</dd>
+   <dd><a href="http://www.w3.org/TR/html5/dom.html#index-aria-link"><code>link</code></a> role (default - <a href="http://www.w3.org/TR/html5/dom.html#aria-usage-note">do not set</a>).</dd>
    <dt>Allowed <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#state-and-property-attributes">ARIA state and property attributes</a>:</dt>
    <dd><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#index-aria-global">Global aria-* attributes</a></dd>
+   <dd>Any aria-* attributes <a href="http://www.w3.org/TR/html5/dom.html#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd>
    <dt><a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-dom">DOM interface</a>:</dt>
    <dd>
-<pre class="idl">interface <dfn id="htmllayerelement">HTMLLayerElement</dfn> : <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#htmlelement">HTMLElement</a> {
-  <em>          attribute DOMString <a href="#attr-layer-label">label</a>;</em>
-  <em> readonly attribute DOMString <a href="#attr-layer-src">src</a>;</em>
+<pre class="idl">interface <dfn id="htmllayerelement">HTMLMapAreaElement</dfn> : <a href="http://www.w3.org/TR/2014/REC-html5-20141028/dom.html#htmlelement">HTMLElement</a> {
+  <em>attribute DOMString <a href="#attr-area-href">href</a>;</em>
+  <em>attribute DOMString <a href="#attr-area-alt">alt</a>;</em>
+  <em>attribute DOMString <a href="#attr-area-coords">coords</a>;</em>
+  <em>attribute boolean <a href="#attr-area-shape">shape</a>;</em>
 };</pre>
    </dd>
   </dl>
-<h4 id="projections"><span class="secno">4.1.2 </span>Projection identifiers</h4>
-<p>The following table summarizes the <a href="#attr-map-projection"><code>projection</code></a> identifier values that are defined by this specification.</p>
+<p>The <code>map-area</code> element allows the HTML author to encode and style a limited set of spatial feature types on its parent <code>web-map</code> element, using familiar <a target="_blank" href="http://www.w3.org/TR/html5/embedded-content-0.html#image-map">image map</a> coordinates.  Such features
+can be optionally designated as hyperlinks to be selected by the user.</p>
+<p>If present, the <code>href</code> attribute identifies the designated coordinate area as a hyperlink.  If no <code>href</code> attribute exists, the area is designated as a non-interactive area.
+  The <code>alt</code> attribute specifies a label which can be used by the user agent for ephemeral and non-visual labelling of the area.  </p>
+<p>If the <code>map-area</code> element has no <code>href</code> attribute, then the area represented by the element cannot be selected, and the <code>alt</code> attribute must be omitted.</p>
+  <p>The <code>coords</code> attribute is a 
+  comma-separated list of integer coordinate values which delimit the geometry of the (area) feature.  The <code>shape</code> attribute identifies the type of geometry which is
+  encoded as coordinates in the <code>coords</code> attribute.</p>
+  <p>The shape attribute is an enumerated attribute. The following table lists the keywords defined for this attribute. The states given in the first cell of the rows with 
+    keywords give the states to which those keywords map. </p>
+  <table>
+    <thead>
+      <tr><th>State</th><th>Keywords</th><th class="impl">Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td ><a data-anolis-xref="attr-map-area-shape-circle" href="#attr-map-area-shape-circle">Circle state</a></td>
+        <td><dfn data-anolis-xref="attr-map-area-shape-keyword-circle" id="attr-map-area-shape-keyword-circle"><code>circle</code></dfn></td>
+        <td class="impl"></td>
+      </tr>
+      <tr>
+        <td><a data-anolis-xref="attr-map-area-shape-default" href="#attr-map-area-shape-default">Default state</a></td>
+        <td><dfn data-anolis-xref="attr-map-area-shape-keyword-default" id="attr-map-area-shape-keyword-default"><code>default</code></dfn></td>
+        <td class="impl"></td>
+      </tr>
+      <tr>
+        <td ><a data-anolis-xref="attr-map-area-shape-poly" href="#attr-map-area-shape-poly">Polygon state</a></td>
+        <td><dfn data-anolis-xref="attr-map-area-shape-keyword-poly" id="attr-map-area-shape-keyword-poly"><code>poly</code></dfn></td>
+        <td class="impl"></td>
+      </tr>
+      <tr>
+        <td><a data-anolis-xref="attr-map-area-shape-rect" href="#attr-map-area-shape-rect">Rectangle state</a></td>
+        <td><dfn data-anolis-xref="attr-map-area-shape-keyword-rect" id="attr-map-area-shape-keyword-rect"><code>rect</code></dfn></td>
+        <td class="impl"></td>
+      </tr>
+      <tr>
+        <td><a data-anolis-xref="attr-map-area-shape-marker" href="#attr-map-area-shape-marker">Marker state</a></td>
+        <td><dfn data-anolis-xref="attr-map-area-shape-keyword-marker" id="attr-map-area-shape-keyword-marker"><code>marker</code></dfn></td>
+        <td class="impl">new</td>
+      </tr>
+      <tr>
+        <td><a data-anolis-xref="attr-map-area-shape-line" href="#attr-map-area-shape-line">Line state</a></td>
+        <td><dfn data-anolis-xref="attr-map-area-shape-keyword-line" id="attr-map-area-shape-keyword-line"><code>line</code></dfn></td>
+        <td class="impl">new</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>The <code>shape</code> attribute may be omitted. The missing value default is the rectangle state.</p>
 
-<table>
-   <thead>
-    <tr>
-     <th>Projection value</th>
-     <th>Description</th>
-     <th>Base CRS / Projection system</th>
-     <th>Origin (x,y)</th>
-     <th>Tile row/column size (px)</th>
-     <th>Projected Bounds / LatLng Bounds</th>
-     <th>Zoom level</th>
-     <th>Resolution</th>
-    </tr>
-   </thead>
-   <tbody>
+  <p>The <code>coords</code> attribute must, if specified, contain a valid list of integers. This attribute gives the coordinates for the shape described by the 
+    <code>shape</code> attribute. The processing for this attribute is described as part of the <a href="http://www.w3.org/TR/html5/embedded-content-0.html#image-map">image map</a> processing model.</p>
 
-    <tr>
-     <td><code>OSMTILE</code></td>
-     <td>Default value of the <a href="#attr-map-projection">projection</a> attribute.  Web Mercator-based tiled coordinate reference system.</td>
-     <td>EPSG::3857 / Spherical Mercator</td>
-     <td>-20037508.342787, 20037508.342787</td>
-     <td>256/256</td>
-     <td>LatLng(-85.0511287798,-180), LatLng(85.0511287798,180)</td>
-     <td>                  0<br>
-                  1<br>
-                  2<br>
-                  3<br>
-                  4<br>
-                  5<br>
-                  6<br>
-                  7<br>
-                  8<br>
-                  9<br>
-                  10<br>
-                  11<br>
-                  12<br>
-                  13<br>
-                  14<br>
-                  15<br>
-                  16<br>
-                  17<br>
-                  18<br>
+  <p id="attr-map-area-shape-keyword-circle">In the <dfn data-anolis-xref="attr-map-area-shape-circle" id="attr-map-area-shape-circle">circle state</dfn>, <code>map-area</code> elements must have a <code>coords</code> attribute present, with three integers, 
+    the last of which must be non-negative. The first integer must be the distance in CSS pixels from the left edge of the image to the center of the circle, the second integer must be the distance 
+    in CSS pixels from the top edge of the image to the center of the circle, and the third integer must be the radius of the circle, 
+    again in CSS pixels.</p>
 
-</td>
-     <td>            156543.0339<br>
-                     78271.51695<br>
-                     39135.758475<br>
-                     19567.8792375<br>
-                     9783.93961875<br>
-                     4891.969809375<br>
-                     2445.9849046875<br>
-                     1222.9924523438<br>
-                     611.49622617188<br>
-                     305.74811308594<br>
-                     152.87405654297<br>
-                     76.437028271484<br>
-                     38.218514135742<br>
-                     19.109257067871<br>
-                     9.5546285339355<br>
-                     4.7773142669678<br>
-                     2.3886571334839<br>
-                     1.1943285667419<br>
-                     0.59716428337097<br>   
-</td>
-    </tr>
-    <tr>
-     <td><code>CBMTILE</code></td>
-     <td>Lambert Conformal Conic-based tiled coordinate reference system for Canada.</td>
-     <td>EPSG::3978 / Lambert Conformal Conic</td>
-     <td>-34655800, 39310000</td>
-     <td>256/256</td>
-     <td>-7786476.885838887, -5153821.09213678, 7148753.233541353, 7928343.534071138</td>
-     <td>0<br>
-                  1<br>
-                  2<br>
-                  3<br>
-                  4<br>
-                  5<br>
-                  6<br>
-                  7<br>
-                  8<br>
-                  9<br>
-                  10<br>
-                  11<br>
-                  12<br>
-                  13<br>
-                  14<br>
-                  15<br>
-                  16<br>
-                  17<br></td>
-     <td>                             38364.660062653464<br> 
-                 22489.62831258996<br> 
-                 13229.193125052918<br> 
-                 7937.5158750317505<br> 
-                 4630.2175937685215<br> 
-                 2645.8386250105837<br>
-                 1587.5031750063501<br>
-                 926.0435187537042<br> 
-                 529.1677250021168<br> 
-                 317.50063500127004<br> 
-                 185.20870375074085<br> 
-                 111.12522225044451<br> 
-                 66.1459656252646<br> 
-                 38.36466006265346<br> 
-                 22.48962831258996<br>
-                 13.229193125052918<br>
-                 7.9375158750317505<br> 
-                 4.6302175937685215<br>    
+  <p id="attr-map-area-shape-keyword-default">In the <dfn data-anolis-xref="attr-map-area-shape-default" id="attr-map-area-shape-default">default state</dfn>, <code>map-area</code> elements must not have a <code>coords</code> attribute. (The area is the 
+    whole area of the map on the page.)</p>
 
-</td>
-    </tr>
-    <tr>
-     <td><code>APSTILE</code></td>
-     <td>Alaska Polar Stereographic-based tiled coordinate reference system for the Arctic region.</td>
-     <td>EPSG::5936 / Polar Stereographic</td>
-     <td>-28567784.109255, 32567784.109255</td>
-     <td>256/256</td>
-     <td>-28567784.109254867, -28567784.109254755, 32567784.109255023, 32567784.10925506</td>
-     <td>         
-                  0<br>
-                  1<br>
-                  2<br>
-                  3<br>
-                  4<br>
-                  5<br>
-                  6<br>
-                  7<br>
-                  8<br>
-                  9<br>
-                  10<br>
-                  11<br>
-                  12<br>
-                  13<br>
-                  14<br>
-                  15<br>
-                  16<br>
-                  17<br>
-                  18<br>
-                  19<br></td>
-     <td>                             238810.813354<br>
-                  119405.406677<br>
-                  59702.7033384999<br>
-                  29851.3516692501<br>
-                  14925.675834625<br>
-                  7462.83791731252<br>
-                  3731.41895865639<br>
-                  1865.70947932806<br>
-                  932.854739664032<br>
-                  466.427369832148<br>
-                  233.213684916074<br>
-                  116.606842458037<br>
-                  58.3034212288862<br>
-                  29.1517106145754<br>
-                  14.5758553072877<br>
-                  7.28792765351156<br>
-                  3.64396382688807<br>
-                  1.82198191331174<br>
-                  0.910990956788164<br>
-                  0.45549547826179<br>    
+  <p id="attr-map-area-shape-keyword-poly">In the <dfn data-anolis-xref="attr-map-area-shape-polygon" id="attr-map-area-shape-polygon">polygon state</dfn>, <code>map-area</code> elements must have a <code>coords</code> attribute with at least six integers, 
+    and the number of integers must be even. Each pair of integers must represent a coordinate given as the distances from the left and the top of the 
+    map in CSS pixels respectively, and all the coordinates together must represent the points of the polygon, in order.</p>
 
-</td>
-    </tr>
-   </tbody>
-</table>
+  <p id="attr-map-area-shape-keyword-rect">In the <dfn data-anolis-xref="attr-map-area-shape-rectangle" id="attr-map-area-shape-rectangle">rectangle state</dfn>, <code>map-area</code> elements must have a <code>coords</code> attribute with exactly four integers, 
+    the first of which must be less than the third, and the second of which must be less than the fourth. The four values must represent, respectively, the 
+    distance from the left edge of the map to the left side of the rectangle, the distance from the top edge to the top side, the distance from the left edge 
+    to the right side, and the distance from the top edge to the bottom side, all in CSS pixels.</p>
 
+  <p id="attr-map-area-shape-keyword-marker">In the <dfn data-anolis-xref="attr-map-area-shape-marker" id="attr-map-area-shape-marker">marker state</dfn>, <code>map-area</code> elements must have a <code>coords</code> attribute with exactly two integers. 
+    The first integer must be the distance in CSS pixels from the left edge of the map to the top left corner of the marker, the second integer must be the distance 
+    in CSS pixels from the top edge of the map to the top left corner of the marker.</p>
+  
+  <p id="attr-map-area-shape-keyword-line">In the <dfn data-anolis-xref="attr-map-area-shape-line" id="attr-map-area-shape-line">line state</dfn>, <code>map-area</code> elements must have a <code>coords</code> attribute with at least four
+  integers, and the number of integers must be even.  Each pair of integers must represent a coordinate given as the distances from the left and the top of the 
+    map in CSS pixels respectively, and all the coordinates together must represent the points of the line, in order.</p>
+  
+  <p>The intention of the <code>map-area</code> element is to extend the behavior of the existing HTML <code>area</code> element. For information pertaining to
+    the processing of various link types created by the <code>area</code> element, please refer to the description of hyperlink processing for the 
+    <a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-area-element">HTML <code>area</code> element</a>.</p>
+  
         
 <h4 id="web-maps"><span class="secno">4.2 </span>Web maps</h4>
 <div class="impl">
@@ -515,12 +568,12 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 
   </div>
 <p>A <dfn id="web-map">Web map</dfn> is an embedded media element which enables dynamic cartographic Web applications in HTML documents.</p>
-<p>A Web map is a rectangular page area, represented in HTML in the form of a <code><a href="#the-map-element">&lt;map is="mapml-map"&gt;</a></code> element, containing a set of zero or more 
+<p>A Web map is a rectangular page area, represented in HTML in the form of a <code><a href="#the-web-map-element">&lt;web-map&gt;</a></code> element, containing a set of zero or more 
   <code><a href="#the-layer-element">layer</a></code> elements.  A Web map represents a region of the earth's surface in two dimensions.  A map's initial location 
-  (<code><a href="#attr-map-lat">lat</a></code>, <code><a href="#attr-map-lon">lon</a></code>), extent ( <code><a href="#attr-map-width">width</a></code> and <code><a href="#attr-map-height">height</a></code>) 
-  and scale (<code><a href="#attr-map-zoom">zoom</a></code>) are defined by its attributes.</p>
+  (<code><a href="#attr-web-map-lat">lat</a></code>, <code><a href="#attr-web-map-lon">lon</a></code>), extent ( <code><a href="#attr-web-map-width">width</a></code> and <code><a href="#attr-web-map-height">height</a></code>) 
+  and scale (<code><a href="#attr-web-map-zoom">zoom</a></code>) are defined by its attributes.</p>
 <div class="example">
-    <style> map {
+    <style> web-map {
         height: 300px;
         width: 640px;
       }</style>
@@ -529,16 +582,14 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
    <p>Consider a map of Paris:</p>
 
    <p>
-     <map is="mapml-map" zoom="11" lat="48.85591" lon="2.3469543" width="640" height="300">
-      <layer label="Open Street Map" src="http://geogratis.gc.ca/mapml/osm/"></layer>
-    </map>
+     <img src="paris.png" alt="Paris">
    </p>
 
    <p>This map can be created with the following markup:</p>
 
-   <pre>&lt;map is="mapml-map" zoom="11" lat="48.85591" lon="2.3469543" width="640" height="300"&gt;
-   &lt;layer label="Open Street Map" src="http://hostname/mapml/osm/"&gt;
-&lt;/map&gt;
+   <pre>&lt;web-map zoom="11" lat="48.85591" lon="2.3469543" width="640" height="300"&gt;
+   &lt;map-layer label="Open Street Map" src="http://example.com/mapml/osm/" checked&gt;&lt;/map-layer&gt;
+&lt;/web-map&gt;
 </pre>
    
   </div>
@@ -548,16 +599,8 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 <div class="example">
 
    <p>Here is a map of Ottawa, with two layers:</p>
+   <img src="ottawa.jpg">
 
-   <style>
-     .transparency {
-       opacity: 0.2;
-     }
-   </style>
-  <map is="mapml-map" zoom="15" lat="45.398043" lon="-75.70683" width="640" height="300">
-    <layer label="Canada Base Map" src="http://geogratis.gc.ca/mapml/cbmt/">
-      <layer label="CanVec+ 031G" src="http://geogratis.gc.ca/mapml/canvec/50k/features/" class="transparency">
-  </map>
 
    <p>This map can be created with the following markup:</p>
 
@@ -567,10 +610,10 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
        opacity: 0.2;
      }
    &lt;/style&gt;
-  &lt;map is="mapml-map" zoom="15" lat="45.398043" lon="-75.70683" width="640" height="300"&gt;
-    &lt;layer label="Canada Base Map" src="http://geogratis.gc.ca/mapml/cbmt/"&gt;
-    &lt;layer label="CanVec+ 031G" src="http://geogratis.gc.ca/mapml/canvec/50k/features/" class="transparency"&gt;
-  &lt;/map&gt;
+  &lt;web-map zoom="15" lat="45.398043" lon="-75.70683" width="640" height="300" projection="CBMTILE"&gt;
+    &lt;map-layer label="Canada Base Map" src="http://example.com/mapml/cbmt/" checked&gt;&lt;/map-layer&gt;
+    &lt;map-layer label="CanVec+ 031G" src="http://example.com/mapml/canvec/50k/features/" class="transparency"&gt;&lt;/map-layer&gt;
+  &lt;/web-map&gt;
 </pre>
    
   </div>
@@ -601,7 +644,7 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 <div id="sec-schema">
 	<h2 id="schema">7. Syntax</h2>
 	
-        <p>The <a href="#the-map-element"><code>map</code></a> element has a different, alternative content model defined by this specification, compared to <a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-map-element">that</a> defined by the HTML standard.</p>
+        <p>The <a href="#the-web-map-element"><code>web-map</code></a> element has a different, alternative content model defined by this specification, compared to <a href="http://www.w3.org/TR/html5/embedded-content-0.html#the-web-map-element">that</a> defined by the HTML standard.</p>
 </div>
 
 
@@ -620,16 +663,16 @@ proposal, that of Map Markup Language [<a href="#ref-MapML">MapML</a>].</p>
 
     <dt id="ref-Map-Custom-Element"><strong class="normref">[Map-Custom-Element]</strong></dt>
     <dd>
-      <cite><a href="https://github.com/Maps4HTML/Map-Custom-Element"><code>map</code> Custom Type Extension Element project</a></cite>,
+      <cite><a href="https://github.com/Maps4HTML/Map-Custom-Element"><code>web-map</code> Custom Element project</a></cite>,
       Maps For HTML Community Group, August 2015.
       <br>Available at https://github.com/Maps4HTML/Map-Custom-Element.
     </dd>
 
     <dt id="ref-MapML"><strong class="normref">[MapML]</strong></dt>
     <dd>
-      <cite><a href="http://maps4html.github.io/mapml/spec/">Map Markup Language</a></cite>,
+      <cite><a href="http://maps4html.github.io/MapML/spec/">Map Markup Language</a></cite>,
       Maps For HTML Community Group, July 14, 2015.
-      <br>Available at http://maps4html.github.io/mapml/spec/.
+      <br>Available at http://maps4html.github.io/MapML/spec/.
     </dd>
 
     <dt id="ref-RNG"><strong class="normref">[RELAXNG]</strong></dt>
