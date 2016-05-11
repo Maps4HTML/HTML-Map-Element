@@ -433,6 +433,17 @@ interface <dfn id="htmlweb-mapelement">HTMLWebMapElement</dfn> : <a href="http:/
   <em>          attribute boolean <a href="#attr-layer-checked">checked</a>;</em>
   <em> readonly attribute boolean <a href="#attr-layer-disabled">disabled</a>;</em>
   <em>          attribute boolean <a href="#attr-layer-hidden">hidden</a>;</em>
+  <em> readonly attribute <a href="#legendlink">LegendLink[]</a> legendLinks;</em>
+};
+
+interface <dfn id="legendlink">LegendLink</dfn> {
+  <em>readonly attribute DOMString <a href="#dom-legendlink-type">type</a>;
+  readonly attribute DOMString <a href="#dom-legendlink-rel">rel</a>;
+  readonly attribute DOMString <a href="#dom-legendlink-href">href</a>;
+  readonly attribute DOMString <a href="#dom-legendlink-title">title</a>;
+  readonly attribute DOMString <a href="#dom-legendlink-lang">lang</a>;
+  readonly attribute DOMString <a href="#dom-legendlink-hreflang">hreflang</a>;
+  readonly attribute DOMString <a href="#dom-legendlink-sizes">sizes</a>;</em>
 };</pre>
    </dd>
   </dl>
