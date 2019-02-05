@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-      <meta content="text/html; charset=UTF-8" http-equiv="content-type">
-
-
-  
+      <meta charset="UTF-8">
       <title>HTML &lt;map&gt; Element Proposal</title>
   
   <link class="required" rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/w3c-unofficial.css" type="text/css"/>
@@ -63,8 +60,6 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
        td > .example:only-child { margin: 0 0 0 0.1em; }
        dt, dfn { font-weight: bold; font-style: normal; }
   </style>
-  <script src="https://maps4html.github.io/Web-Map-Custom-Element/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
-  <link rel="import" href="https://maps4html.github.io/Web-Map-Custom-Element/web-map.html">
 
 </head>
 <body>
@@ -101,8 +96,8 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 </dl>
 
 
-<p class="copyright required">This document is licensed under a <a class="subfoot" href="https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document" rel="license">W3C Software and Document License.</a>. </p>
-
+<p>Copyright © 2015-2019 the Contributors to the HTML &lt;map&gt; Element proposal, published by the  <a href="https://www.w3.org/community/maps4html/">Maps for HTML Community Group</a> under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.
+</p>
 </div>
 
 <hr title="Separator from Header">
@@ -202,7 +197,6 @@ and should only depend on Web standards, including Uniform Resource Identifiers,
 				<li>8.2. <a href="#informrefs">Informative References</a></li>
 			</ul>
 		</li>
-		<li>9. <a href="#Acknowledgments">Acknowledgments</a></li>
 	</ol>
 </div>
 
@@ -517,7 +511,7 @@ interface <dfn id="legendlink">LegendLink</dfn> {
    <dd>Any aria-* attributes <a target="_blank" href="https://www.w3.org/TR/html5/dom.html#allowed-aria-roles,-states-and-properties">applicable to the allowed roles</a>.</dd>
    <dt><a target="_blank" href="https://www.w3.org/TR/2014/REC-html5-20141028/dom.html#element-dfn-dom">DOM interface</a>:</dt>
    <dd>
-<pre class="idl">interface <dfn id="htmllayerelement">HTMLAreaElement</dfn> : <a target="_blank" href="https://www.w3.org/TR/2014/REC-html5-20141028/dom.html#htmlelement">HTMLElement</a> {
+<pre class="idl">interface <dfn>HTMLAreaElement</dfn> : <a target="_blank" href="https://www.w3.org/TR/2014/REC-html5-20141028/dom.html#htmlelement">HTMLElement</a> {
   <em>attribute DOMString <a href="#attr-area-href">href</a>;</em>
   <em>attribute DOMString <a href="#attr-area-alt">alt</a>;</em>
   <em>attribute DOMString <a href="#attr-area-coords">coords</a>;</em>
@@ -578,34 +572,34 @@ can be optionally designated as hyperlinks to be selected by the user.</p>
   <p>The <a href="#attr-area-coords"><code>coords</code></a> attribute must, if specified, contain a valid list of integers. This attribute gives the coordinates for the shape described by the 
     <a href="#attr-area-shape"><code>shape</code></a> attribute. The processing for this attribute is described as part of the <a target="_blank" href="https://www.w3.org/TR/html5/embedded-content-0.html#image-map">image map</a> processing model.</p>
 
-  <p id="attr-area-shape-keyword-circle">In the <dfn data-anolis-xref="attr-area-shape-circle" id="attr-area-shape-circle">circle state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must have a <a href="#attr-area-coords"><code>coords</code></a> attribute present, with three integers, 
+  <p>In the <dfn data-anolis-xref="attr-area-shape-circle" id="attr-area-shape-circle">circle state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must have a <a href="#attr-area-coords"><code>coords</code></a> attribute present, with three integers, 
     the last of which must be non-negative. The first integer must be the distance in CSS pixels from the left edge of the image to the center of the circle, the second integer must be the distance 
     in CSS pixels from the top edge of the image to the center of the circle, and the third integer must be the radius of the circle, 
     again in CSS pixels.</p>
 
-  <p id="attr-area-shape-keyword-default">In the <dfn data-anolis-xref="attr-area-shape-default" id="attr-area-shape-default">default state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must not have a <code>coords</code> attribute. (The area is the 
+  <p>In the <dfn data-anolis-xref="attr-area-shape-default" id="attr-area-shape-default">default state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must not have a <code>coords</code> attribute. (The area is the 
     whole area of the map on the page.)</p>
 
-  <p id="attr-area-shape-keyword-poly">In the <dfn data-anolis-xref="attr-area-shape-polygon" id="attr-area-shape-polygon">polygon state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must have a <code>coords</code> attribute with at least six integers, 
+  <p>In the <dfn data-anolis-xref="attr-area-shape-polygon" id="attr-area-shape-polygon">polygon state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must have a <code>coords</code> attribute with at least six integers, 
     and the number of integers must be even. Each pair of integers must represent a coordinate given as the distances from the left and the top of the 
     map in CSS pixels respectively, and all the coordinates together must represent the points of the polygon, in order.</p>
 
-  <p id="attr-area-shape-keyword-rect">In the <dfn data-anolis-xref="attr-area-shape-rectangle" id="attr-area-shape-rectangle">rectangle state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must have a <code>coords</code> attribute with exactly four integers, 
+  <p>In the <dfn data-anolis-xref="attr-area-shape-rectangle" id="attr-area-shape-rectangle">rectangle state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must have a <code>coords</code> attribute with exactly four integers, 
     the first of which must be less than the third, and the second of which must be less than the fourth. The four values must represent, respectively, the 
     distance from the left edge of the map to the left side of the rectangle, the distance from the top edge to the top side, the distance from the left edge 
     to the right side, and the distance from the top edge to the bottom side, all in CSS pixels.</p>
 
-  <p id="attr-area-shape-keyword-marker">In the <dfn data-anolis-xref="attr-area-shape-marker" id="attr-area-shape-marker">marker state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must have a <code>coords</code> attribute with exactly two integers. 
+  <p>In the <dfn data-anolis-xref="attr-area-shape-marker" id="attr-area-shape-marker">marker state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must have a <code>coords</code> attribute with exactly two integers. 
     The first integer must be the distance in CSS pixels from the left edge of the map to the top left corner of the marker, the second integer must be the distance 
     in CSS pixels from the top edge of the map to the top left corner of the marker.</p>
   
-  <p id="attr-area-shape-keyword-line">In the <dfn data-anolis-xref="attr-area-shape-line" id="attr-area-shape-line">line state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must have a <code>coords</code> attribute with at least four
+  <p>In the <dfn data-anolis-xref="attr-area-shape-line" id="attr-area-shape-line">line state</dfn>, <a href="#the-area-element"><code>area</code></a> elements must have a <code>coords</code> attribute with at least four
   integers, and the number of integers must be even.  Each pair of integers must represent a coordinate given as the distances from the left and the top of the 
     map in CSS pixels respectively, and all the coordinates together must represent the points of the line, in order.</p>
   
   <p>The intention of the <a href="#the-area-element"><code>area</code></a> element is to extend the behavior of the existing HTML <a href="#the-area-element"><code>area</code></a> element. For information pertaining to
     the processing of various link types created by the <a href="#the-area-element"><code>area</code></a> element, please refer to the description of hyperlink processing for the 
-    <a target="_blank" href="https://www.w3.org/TR/html5/embedded-content-0.html#the-area-element">HTML <a href="#the-area-element"><code>area</code></a> element</a>.</p>
+    <a target="_blank" href="https://www.w3.org/TR/html5/embedded-content-0.html#the-area-element">HTML <code>area</code></a> element.</p>
   
         
 <h4 id="maps"><span class="secno">4.2 </span>Web maps</h4>
@@ -620,16 +614,11 @@ can be optionally designated as hyperlinks to be selected by the user.</p>
   (<a href="#attr-map-lat"><code>lat</code></a>, <a href="#attr-map-lon"><code>lon</code></a>), extent ( <a href="#attr-map-width"><code>width</code></a> and <a href="#attr-map-height"><code>height</code></a>) 
   and scale (<a href="#attr-map-zoom"><code>zoom</code></a>) are defined by its attributes.</p>
 <div class="example">
-    <style> map {
-        height: 300px;
-        width: 640px;
-      }</style>
-
 
    <p>Consider a map of Paris:</p>
 
    <p>
-     <img src="paris.png" alt="Paris">
+     <img src="paris.png" alt="Medium scale image of a street map of Paris, France">
    </p>
 
    <p>This map can be created with the following markup:</p>
@@ -640,13 +629,13 @@ can be optionally designated as hyperlinks to be selected by the user.</p>
 </pre>
    
   </div>
-<p>A Web map can have zero or more layers.  Map layers are drawn in document order of the <a href="#the-layer-element"><code>layer</code></a> elements, following the <a target="_blank" href="https://www.w3.org/TR/SVG/render.html#PaintersModel"  target="_blank">painters model</a>.  If the user 
+<p>A Web map can have zero or more layers.  Map layers are drawn in document order of the <a href="#the-layer-element"><code>layer</code></a> elements, following the <a href="https://www.w3.org/TR/SVG/render.html#PaintersModel"  target="_blank">painters model</a>.  If the user 
 (or author) enables more than one layer, all the layers will be painted, in document order.  Features in layers drawn earlier will be painted over by later layers.  Opacity of layers can be managed with CSS, if necessary.</p>
 
 <div class="example">
 
    <p>Here is a map of Ottawa, with two layers:</p>
-   <img src="ottawa.jpg">
+   <img alt="Large scale image of a street map of part of Ottawa, Canada" src="ottawa.jpg">
 
 
    <p>This map can be created with the following markup:</p>
@@ -737,12 +726,10 @@ can be optionally designated as hyperlinks to be selected by the user.</p>
     <dt id="ref-RNG"><strong class="normref">[RELAXNG]</strong></dt>
 <dd>
 	    <cite><a target="_blank" href="http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf">Document Schema Definition Languages (DSDL) — Part 2: Regular grammar-based validation — RELAX NG, ISO/IEC FDIS 19757-2:2002(E)</a></cite>,
-	    J. Clark, <ruby><rb xml:lang="ja">村田 真</rb> <rp>(</rp><rt><span class="familyname">Murata</span> M.</rt><rp>)</rp></ruby>, eds.
+	    J. Clark, <ruby><rb xml:lang="ja" lang="ja">村田 真</rb> <rp>(</rp><rt><span class="familyname">Murata</span> M.</rt><rp>)</rp></ruby>, eds.
 	    International Organization for Standardization, 12 December 2002.
 	    <br>Available at http://www.y12.doe.gov/sgml/sc34/document/0362_files/relaxng-is.pdf.
 	  </dd>	</dl>
-
-	</dl>
 
 	<h3 id="informrefs">8.2. Informative References</h3>
 	<dl>
@@ -769,16 +756,6 @@ can be optionally designated as hyperlinks to be selected by the user.</p>
 
 	</dl>
 	
-</div>
-
-
-<div>
-  <h3 id="Acknowledgments">10. Acknowledgments</h3>
-
-  <p>
-    The editors would like to acknowledge and thank the following people for substantive aid with this specification: 
-    <em>list of names</em>.
-  </p>
 </div>
 
 </div>
