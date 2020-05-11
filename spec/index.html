@@ -447,6 +447,7 @@ interface <dfn id="htmlmapelement">HTMLMapElement</dfn> : <a target="_blank" hre
    <dd id="attr-layer-checked"><em><code><a href="#attr-layer-checked">checked</a></code> - Layer on/off status</em></dd>
    <dd id="attr-layer-hidden"><em><code><a href="#attr-layer-hidden">hidden</a></code> - Visibility status of the layer in the layer control</em></dd>
    <dd id="attr-layer-referrerpolicy"><em><code><a href="#attr-layer-referrerpolicy">referrerpolicy</a></code> - <a href="https://w3c.github.io/webappsec-referrer-policy/#referrer-policy">Referrer policy</a> for <a href="https://fetch.spec.whatwg.org/#concept-fetch">fetches</a> initiated by the element</em></dd>
+   <dd id="attr-layer-crossorigin"><em><code><a href="#attr-layer-crossorigin">crossorigin</a></code> - A <a href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#cors-settings-attribute">CORS settings attribute</a>, specifies how the element handles crossorigin requests.</em></dd>
   <dt><span>Tag omission in text/html</span>:</dt>
    <dd>Neither tag is omissible</dd>
    <dt>Allowed <a target="_blank" href="https://www.w3.org/TR/2014/REC-html5-20141028/dom.html#aria-role-attribute">ARIA role attribute</a> values:</dt>
@@ -462,7 +463,8 @@ interface <dfn id="htmlmapelement">HTMLMapElement</dfn> : <a target="_blank" hre
   <em> readonly attribute boolean <a href="#attr-layer-disabled">disabled</a>;</em>
   <em>          attribute boolean <a href="#attr-layer-hidden">hidden</a>;</em>
   <em> readonly attribute <a href="#legendlink">LegendLink[]</a> legendLinks;</em>
-  <em>          attribute DOMString <a href="#attr-layer-referrerpolicy">referrerpolicy</a>;</em>
+  <em>          attribute DOMString <a href="#attr-layer-referrerpolicy">referrerPolicy</a>;</em>
+  <em>          attribute DOMString? <a href="#attr-layer-crossorigin">crossOrigin</a>;</em>
 };
 
 interface <dfn id="legendlink">LegendLink</dfn> {
@@ -629,7 +631,7 @@ can be optionally designated as hyperlinks to be selected by the user.</p>
    <p>This map can be created with the following markup:</p>
 
    <pre>&lt;map zoom="11" lat="48.85591" lon="2.3469543" width="640" height="300"&gt;
-   &lt;layer label="Open Street Map" src="https://example.com/mapml/osm/" checked&gt;&lt;/layer&gt;
+   &lt;layer label="OpenStreetMap" src="https://example.com/mapml/osm/" checked crossorigin&gt;&lt;/layer&gt;
 &lt;/map&gt;
 </pre>
    
@@ -652,8 +654,8 @@ can be optionally designated as hyperlinks to be selected by the user.</p>
      }
    &lt;/style&gt;
   &lt;map zoom="15" lat="45.398043" lon="-75.70683" width="640" height="300" projection="CBMTILE"&gt;
-    &lt;layer label="Canada Base Map" src="https://example.com/mapml/cbmt/" checked&gt;&lt;/layer&gt;
-    &lt;layer label="CanVec+ 031G" src="https://example.com/mapml/canvec/50k/features/" class="transparency"&gt;&lt;/layer&gt;
+    &lt;layer label="Canada Base Map" src="https://example.com/mapml/cbmt/" checked crossorigin&gt;&lt;/layer&gt;
+    &lt;layer label="CanVec+ 031G" src="https://example.com/mapml/canvec/50k/features/" crossorigin class="transparency"&gt;&lt;/layer&gt;
   &lt;/map&gt;
 </pre>
    
