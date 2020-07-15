@@ -445,6 +445,7 @@ interface <dfn id="htmlmapelement">HTMLMapElement</dfn> : <a target="_blank" hre
    <dd id="attr-layer-src"><em><code><a href="#attr-layer-src">src</a></code> - Address of the resource</em></dd>
    <dd id="attr-layer-label"><em><code><a href="#attr-layer-label">label</a></code> - String label for the layer in the layer control, if displayed</em></dd>
    <dd id="attr-layer-checked"><em><code><a href="#attr-layer-checked">checked</a></code> - Layer on/off status</em></dd>
+   <dd id="attr-layer-disabled"><em><code><a href="#attr-layer-disabled">disabled</a></code> - Sets the disabled state of the layer in the layer control</em></dd>
    <dd id="attr-layer-hidden"><em><code><a href="#attr-layer-hidden">hidden</a></code> - Visibility status of the layer in the layer control</em></dd>
    <dd id="attr-layer-referrerpolicy"><em><code><a href="#attr-layer-referrerpolicy">referrerpolicy</a></code> - <a href="https://w3c.github.io/webappsec-referrer-policy/#referrer-policy">Referrer policy</a> for <a href="https://fetch.spec.whatwg.org/#concept-fetch">fetches</a> initiated by the element</em></dd>
    <dd id="attr-layer-crossorigin"><em><code><a href="#attr-layer-crossorigin">crossorigin</a></code> - A <a href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#cors-settings-attribute">CORS settings attribute</a>, specifies how the element handles crossorigin requests.</em></dd>
@@ -468,13 +469,13 @@ interface <dfn id="htmlmapelement">HTMLMapElement</dfn> : <a target="_blank" hre
 };
 
 interface <dfn id="legendlink">LegendLink</dfn> {
-  <em>readonly attribute DOMString <a href="#dom-legendlink-type">type</a>;
-  readonly attribute DOMString <a href="#dom-legendlink-rel">rel</a>;
-  readonly attribute DOMString <a href="#dom-legendlink-href">href</a>;
-  readonly attribute DOMString <a href="#dom-legendlink-title">title</a>;
-  readonly attribute DOMString <a href="#dom-legendlink-lang">lang</a>;
-  readonly attribute DOMString <a href="#dom-legendlink-hreflang">hreflang</a>;
-  readonly attribute DOMString <a href="#dom-legendlink-sizes">sizes</a>;</em>
+  <em>readonly attribute DOMString type;
+  readonly attribute DOMString rel;
+  readonly attribute DOMString href;
+  readonly attribute DOMString title;
+  readonly attribute DOMString lang;
+  readonly attribute DOMString hreflang;
+  readonly attribute DOMString sizes;</em>
 };</pre>
    </dd>
   </dl>
@@ -553,12 +554,12 @@ can be optionally designated as hyperlinks to be selected by the user.</p>
         <td class="impl"></td>
       </tr>
       <tr>
-        <td ><a data-anolis-xref="attr-area-shape-poly" href="#attr-area-shape-poly">Polygon state</a></td>
+        <td ><a data-anolis-xref="attr-area-shape-polygon" href="#attr-area-shape-polygon">Polygon state</a></td>
         <td><dfn data-anolis-xref="attr-area-shape-keyword-poly" id="attr-area-shape-keyword-poly"><code>poly</code></dfn></td>
         <td class="impl"></td>
       </tr>
       <tr>
-        <td><a data-anolis-xref="attr-area-shape-rect" href="#attr-area-shape-rect">Rectangle state</a></td>
+        <td><a data-anolis-xref="attr-area-shape-rectangle" href="#attr-area-shape-rectangle">Rectangle state</a></td>
         <td><dfn data-anolis-xref="attr-area-shape-keyword-rect" id="attr-area-shape-keyword-rect"><code>rect</code></dfn></td>
         <td class="impl"></td>
       </tr>
