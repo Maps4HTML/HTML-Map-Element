@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>HTML &lt;map&gt; Element Proposal</title>
-  
+  <link rel="canonical" href="https://maps4html.org/MapML/spec/">
   <link class="required" rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/w3c-unofficial.css" type="text/css"/>
   <link rel="stylesheet" type="text/css" href="https://www.w3.org/StyleSheets/TR/w3c-tr.css" />
   <style>
@@ -63,6 +63,36 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
   </style>
   <style>
     *,::after,::before{box-sizing: inherit;}.element::before{box-sizing: initial;width: 0.95em;left: -1.18em;}html{box-sizing: border-box; overflow-wrap: break-word;}body{width: 100%; max-width: 50em; margin: 0 auto;line-height: 1.5;padding: 2rem 2.5em;}html, body{overflow-x: hidden;}table{overflow: auto; display: block;}th:first-child,td:first-child{border-left: 0;}th:last-child,td:last-child{border-right: 0;}.content img{width: 100%;max-width: 100%;height: auto;}.example{overflow-x: hidden;padding: 1em 0 0 0 !important;}.example > *,.example::before{padding-left: 1em !important;padding-right: 1em !important;}dd{margin-left: 0;}pre{overflow: auto;margin-left: initial;}dl.domintro::before{display: table; margin: -1em -0.5em .5em auto;}@media (max-width: 1024px){body{padding-right: 1em;}.toc{padding-left: .5rem;}#google_translate_element [id*="targetLanguage"]{display: block !important;}}pre.idl::before{position:initial;display:block;padding:.3em;width:2.25em;margin:0 .5em .5em 0;background-color:#F4F4FA;}
+    details.outdated-warning[open] {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      padding: 1rem 1rem 1.5rem 1rem;
+      box-shadow: 0 2px 4px #000;
+    }
+    details.outdated-warning:not([open]) summary {
+      padding: .5rem;
+      box-shadow: 0 1px 2px #4a4a4a;
+    }
+    details.outdated-warning {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+      z-index: 1000;
+      text-align: center;
+      background-color: #f79090;
+    }
+    details.outdated-warning > * {
+      max-width: 60em;
+      margin: 0 auto;
+    }
+    details.outdated-warning a:hover {
+      background-color: transparent
+    }
+    details.outdated-warning summary {
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -103,7 +133,20 @@ dl.domintro {padding: 0.5em 1em; border: none; background:#E9FBE9; border: 1px s
 </p>
 </div>
 
-<hr title="Separator from Header">
+<hr>
+
+<details class="outdated-warning" open>
+  <summary>This is out of date!</summary>
+  <p>
+    This document is preserved as a historical record;
+    it is not being updated.
+  </p>
+  <p>
+    Please see
+    <a href="https://maps4html.org/MapML/spec/">https://maps4html.org/MapML/spec/</a> for the latest
+    version.
+  </p>
+</details>
 
 <h2 id="abstract">Abstract</h2>
 
